@@ -20,6 +20,8 @@
     "prettier:check": "npm run prettier -- --list-different",
     "prettier:write": "npm run prettier -- --write",
     "release": "release-it --ci --no-npm.publish",
+    "prestart": "npm run test",
+    "start": "ts-node ./src/index.ts",
     "test": "npm run test:single -- 'test/**/*.test.ts'",
     "test:junit": "npm run test -- --reporter mocha-junit-reporter --reporter-options mochaFile=.junit.xml",
     "test:single": "nyc --reporter=html --reporter=text --extension .ts mocha --forbid-only",
@@ -38,8 +40,10 @@
   "devDependencies": {
     "@release-it/conventional-changelog": "^1.1.4",
     "@types/chai": "^4.2.11",
+    "@types/crypto-js": "^3.1.47",
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.13.4",
+    "@types/node-forge": "^0.9.3",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "chai": "^4.2.0",
@@ -65,5 +69,8 @@
   "gitHooks": {
     "pre-commit": "npm run git-hook:pre-commit && git add ."
   },
-  "dependencies": {}
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "node-forge": "^0.9.1"
+  }
 }
