@@ -5,19 +5,24 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
-    "change:language": "node .scripts/change-language.js",
     "clean": "rimraf coverage dist",
+    "git-hook:pre-commit": "npm run prettier:write && npm run lint:write && npm run jscpd && npm run test",
     "inspector": "jsinspector server --port 9543",
+    "jscpd": "jscpd ./src --blame --format typescript",
     "jscpd:html": "npm run jscpd -- --reporters html",
-    "lint:write": "npm run lint -- --fix",
+    "lint": "eslint ./{src,test}/**/*.ts",
     "lint:watch": "nodemon --exec 'npm run lint'",
-    "prettier:check": "npm run prettier -- --list-different",
-    "prettier:write": "npm run prettier -- --write",
+    "lint:write": "npm run lint -- --fix",
     "prebuild": "npm run clean",
     "prerelease": "npm run build",
     "pretest": "npm run clean",
+    "prettier": "prettier ./{src,test}/**/*.ts",
+    "prettier:check": "npm run prettier -- --list-different",
+    "prettier:write": "npm run prettier -- --write",
     "release": "release-it --ci --no-npm.publish",
+    "test": "npm run test:single -- 'test/**/*.test.ts'",
     "test:junit": "npm run test -- --reporter mocha-junit-reporter --reporter-options mochaFile=.junit.xml",
+    "test:single": "nyc --reporter=html --reporter=text --extension .ts mocha --forbid-only",
     "test:watch": "nodemon --exec 'npm run test'"
   },
   "repository": {
@@ -32,6 +37,11 @@
   "homepage": "https://github.com/dragoscirjan/template-javascript#readme",
   "devDependencies": {
     "@release-it/conventional-changelog": "^1.1.4",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.4",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
     "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-plugin-mocha": "^6.3.0",
@@ -46,7 +56,14 @@
     "release-it": "^13.5.8",
     "rimraf": "^3.0.2",
     "rollup": "^2.10.9",
+    "rollup-plugin-dts": "^1.4.7",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3",
     "yorkie": "^2.0.0"
   },
-  "gitHooks": {}
+  "gitHooks": {
+    "pre-commit": "npm run git-hook:pre-commit && git add ."
+  },
+  "dependencies": {}
 }
