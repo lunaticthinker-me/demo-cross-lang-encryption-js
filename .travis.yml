@@ -1,0 +1,54 @@
+language: node_js
+os:
+  - linux
+  - osx
+  - windows
+env:
+  - LANGUAGE=javascript
+  - LANGUAGE=typescript
+node_js: # a good example: https://github.com/pillarjs/router/blob/master/.travis.yml
+  # - "0.8"
+  # - "0.10"
+  # - "0.12"
+  # - "1.8"
+  # - "2.5"
+  # - "3.3"
+  # - "4.9"
+  # - "5.12"
+  # - "6.17"
+  # - "7.10"
+  # - "8.17"
+  # - "9.11"
+  - "10"
+  - "11"
+  - "12"
+  - "13"
+  - lts/*
+  - node
+sudo: false
+cache:
+  directories:
+    - node_modules
+scripts:
+  - npm run change:language -- $LANGUAGE
+  - npm i
+  - npm run prettier:write
+  - npm run lint:write
+  - npm run jscpd
+  - npm run test
+  - npm run test:junit
+  - npm run build
+after_script:
+  - test $TRAVIS_NODE_VERSION == '12' && test $TRAVIS_OS_NAME == 'linux' && sonar-scanner
+notifications:
+  email:
+    recipients:
+      - dragos.cirjan@gmail.com
+    on_success: never
+    on_failure: always
+addons:
+  sonarcloud:
+    organization: "templ-project"
+    token:
+      secure: "WlxoMMZGNpv/IQCqBXNLJClQkL2rseP8mclRRJh4N60bfhhsS58xwyh/KHUjpDN+7zZG/bP/v1L/1CDU7loLnsQPB2f8UeNecukaYx12dRixkKm2WiWXbQHDweZdFpDq/F5dqmbCsDC+LTmaBmhlddJCafXgXM8pVEXYAHZx6A+YluTDAOPE1MMEZlgpjB32sLnMFPiSeW2Ov9WtoTigIG2jpvoBXKJztcTXdn8QdKoxK+19nkReA3UxKHhajMt/xo9+85sqtRXyIumuk0x6iP0256SyjidOY/joQiD9GmmJLPILkWjEH/I6q0Z4eHutiGDwdZ2PCnmcF+cQB2qPssnl+JxHXQcKeFp05aa7GSDGyJezLCPbbX0c1tZZmHP/qKuwFyIK8QRbkwy9+7A5a2sY+YQOqZI8UO5kBmI9uEKF32ofIu/Nnz1BWobHcytWRclK34Cdd1MGFLRBA34j9TpiyuSIGG6bDxei+QVm80QF9MpX86kJm+Z9VoSL0VJZMs17osy1nF1xTBKlrEaOjA/BVRRzYoYvxF8XUFUd76FB5GrcGwNJD5V8C6G6Mn/ihF2SyQlOQkl3aAmuqY8pJIIFQLGhT1DD1p9UjB+h4TTlmq30lbMi9PPgQSzKihIm6/JVBLcoyuQZW4hNPKmYq6fa7/S2CfPMFi4pLwjVcDQ="
+
