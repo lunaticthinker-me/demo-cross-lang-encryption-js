@@ -1,7 +1,7 @@
 {
-  "name": "templ-project-javascript",
-  "version": "0.0.1",
-  "description": "Javascript Project Template",
+  "name": "demo-cross-lang-encryption-js",
+  "version": "1.0.0",
+  "description": "Demo Using Cross Lang Encryption :: JavaScript",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dragoscirjan/template-javascript.git"
+    "url": "https://github.com/lunaticthinker-me/demo-cross-lang-encryption-js.git"
   },
   "author": "Dragos Cirjan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dragoscirjan/template-javascript/issues"
+    "url": "https://github.com/lunaticthinker-me/demo-cross-lang-encryption-js/issues"
   },
-  "homepage": "https://github.com/dragoscirjan/template-javascript#readme",
+  "homepage": "https://github.com/lunaticthinker-me/demo-cross-lang-encryption-js#readme",
   "devDependencies": {
     "@release-it/conventional-changelog": "^1.1.4",
     "@types/chai": "^4.2.11",
