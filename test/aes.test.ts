@@ -4,21 +4,22 @@ import {it, describe} from 'mocha';
 
 import {AesCrypt} from './../src/democrypt/aes';
 
-describe('AesCrypt', function () {
-  it('new AesCrypt()', function () {
+describe('AesCrypt', () => {
+  it('new AesCrypt()', async () => {
     const aes = new AesCrypt('1234567890123456');
     expect(aes instanceof AesCrypt).to.be.true;
   });
 
-  it('encrypt()', function () {
+  it('encrypt()', async () => {
     const aes = new AesCrypt('1234567890123456');
-    const encrypted = aes.encrypt('test');
+    const encrypted = await aes.encrypt('test');
     expect(encrypted).to.be.a('string');
   });
-  it('decrypt()', function () {
+
+  it('decrypt()', async () => {
     const aes = new AesCrypt('1234567890123456');
-    const encrypted = aes.encrypt('test');
-    const decrypted = aes.decrypt(encrypted);
+    const encrypted = await aes.encrypt('test');
+    const decrypted = await aes.decrypt(encrypted);
     expect(decrypted).to.equal('test');
   });
 });

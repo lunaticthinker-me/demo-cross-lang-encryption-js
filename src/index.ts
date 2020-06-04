@@ -1,40 +1,25 @@
 import * as path from 'path';
 
-import {AesCrypt, RsaCrypt} from './democrypt';
+import {AesCrypt, RsaCrypt, SslCrypt} from './democrypt';
 
 const password = 'th1s1smyp@ssw0rd';
 
-const doAes = (): void => {
+const doAes = async (): Promise<void> => {
   console.log('Using AES:');
 
-  const encTool = new AesCrypt('1234567890123456');
+  const rsa = new AesCrypt('1234567890123456');
 
-  const encPasswordAes = encTool.encrypt(password);
-  const decPasswordAes = encTool.decrypt(encPasswordAes);
-  // decPasswordAesCsharp, _ := encTool.Decrypt("bJj9fLL39dGw+E926oV23cWB7nIdCF73ojKgfyYEpkg=")
+  const encPasswordAes = await rsa.encrypt(password);
+  const decPasswordAes = await rsa.decrypt(encPasswordAes);
+  const decPasswordAesCsharp = await rsa.decrypt('nrc2FBex/MjblB/skCbwlb6TxoavgZ6bFMpS7utIL/4=');
 
-  console.log(`password: ${password} \nenc password: ${encPasswordAes} \ndec password: ${decPasswordAes} \n\n`); //, decPasswordAesCsharp)
+  console.log(
+    `password: ${password} \nenc password: ${encPasswordAes} \ndec password: ${decPasswordAes} \n` +
+      `dec password C#: ${decPasswordAesCsharp} \n\n`,
+  );
 };
 
-// func doSsl(password string) {
-// 	console.log("Using SSL:")
-
-// 	cwd, _ := os.Getwd()
-// 	sslPath := filepath.Join(cwd, "cert", "ssl")
-
-// 	sslTool, err := democrypt.NewSSLCrypt(filepath.Join(sslPath, "cert.pem"), filepath.Join(sslPath, "key.pem"))
-// 	if err != nil {
-// 		panic(fmt.Errorf("could not create ssl encrypt tool: %v", err.Error()))
-// 	}
-
-// 	encPasswordSsl, _ := sslTool.Encrypt(password)
-// 	decPasswordSsl, _ := sslTool.Decrypt(encPasswordSsl)
-
-// 	// decPasswordSslCSharp, _ := sslTool.Decrypt("j6vg8/BhBjAhruPA2+ajF2+y5H3uyxWAXB3UhjpZ13n42Ba3HVDcTrWatSJbntojKpPtp7AnJ9qgUI3BY9T7en62TC91CkpQeMkSfJPAi1+9jwUgJbGj2jAk5/iO//+Dj46MTCYMH54L1IcRnKobbShEyqtdrcAvUap66BUd0uneKyWktCRrJD8z7T/Yw7klGSal+r/piBwzd3Wl1BIdf3pDVpeVCpEeBBgF+rElit4Id7blr9K+dEtSU70KggXUvCgVWA4FW2KHS6Abkvabv/+9ntT6bH/cFlDBHqo4JJDODPgYtshv82vaEbpSnhbm11VseklUDTUVJDlGf08Gmg==")
-
-// 	console.log("password: %s \nenc password: %s \ndec password: %s \n\n", password, encPasswordSsl, decPasswordSsl) //, decPasswordSslCSharp)
-// }
-
+/** eslint-disable @typescript-eslint/no-unused-vars */
 const doRsa = (): void => {
   console.log('Using RSA:');
 
@@ -51,9 +36,37 @@ const doRsa = (): void => {
   );
 
   console.log(
-    `password: ${password} \nenc password: ${encPasswordRsa} \ndec password: ${decPasswordRsa} \ndec password C#: ${decPasswordRsaCSharp} \n\n`,
+    `password: ${password} \nenc password: ${encPasswordRsa} \ndec password: ${decPasswordRsa} \n` +
+      `dec password C#: ${decPasswordRsaCSharp} \n\n`,
+  );
+};
+/** eslint-enable @typescript-eslint/no-unused-vars */
+
+const doSsl = (): void => {
+  console.log('Using SSL:');
+
+  const ssl = new SslCrypt(
+    path.join(__dirname, '..', 'cert', 'ssl', 'key.pem'),
+    path.join(__dirname, '..', 'cert', 'ssl', 'cert.pem'),
+  );
+
+  const encPasswordSsl = ssl.encrypt(password);
+  const decPasswordSsl = ssl.decrypt(encPasswordSsl);
+
+  const decPasswordSslCSharp = ssl.decrypt(
+    'ZPPx5HS4o79anStQY6hXDkM4f/GGB58UkvT9t6MPsfRMiCAMej6evMc7H4t7KwZM8NSpLyV/GnAtt95kk4HMWFVrHdQOeQz+LKJeVISx9znOUFQpyGsWGiDUBS5Qoudm3Gd18Wdmo2xSFqBRieke4s5DpcWt7EKazVOhEo81yC5g3nADiV1LtKhDez4bz9/NVdH4phhlBXaKd3hqMJFP8peRLj52wmzJ6SOvn8jyRUMujceq+TM/iUgEv89s1bZMqvgn+lgKh9U06f6RhXRMEP69I6nML7apd9UsMO8MX4X0WKoTIfyJmXuFBXPMlTkmPr/q+VL/EY5IX3f6TwPO6g==',
+  );
+
+  console.log(
+    `password: ${password} \nenc password: ${encPasswordSsl} \ndec password: ${decPasswordSsl} \n` +
+      `dec password C#: ${decPasswordSslCSharp} \n\n`,
   );
 };
 
-doAes();
-doRsa();
+const main = async (): Promise<void> => {
+  await doAes();
+  // doRsa();
+  doSsl();
+};
+
+main();

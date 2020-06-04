@@ -1,44 +1,50 @@
-import forge from 'node-forge';
+import * as crypto from 'crypto';
 
 import * as fs from 'fs';
+
+import * as util from 'util';
 
 import {Crypt} from './generic';
 
 export class RsaCrypt implements Crypt {
-  private prvKey: forge.pki.PrivateKey | undefined;
-  private pubKey: forge.pki.PublicKey | undefined;
+  protected prvKey: string;
+  protected pubKey: string;
+
+  protected options: Partial<crypto.RsaPrivateKey> = {
+    padding: crypto.constants.RSA_PKCS1_PADDING,
+  };
 
   constructor(prvPath: string, pubPath: string) {
-    forge.pki.rsa.generateKeyPair;
-    this.prvKey = forge.pki.decryptRsaPrivateKey(fs.readFileSync(prvPath).toString('utf-8'));
-    // this.prvKey = forge.pki.privateKeyFromPem(fs.readFileSync(prvPath).toString('utf-8'));
-    this.pubKey = forge.pki.publicKeyFromPem(fs.readFileSync(pubPath).toString('utf-8'));
+    this.prvKey = fs.readFileSync(prvPath).toString('utf-8');
+    this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
+  }
+
+  protected base64Length(password: string): number {
+    return Math.floor((3 * password.length) / 4) - password.replace(/[^=]/gi, '').length;
   }
 
   decrypt(password: string): string {
-    if (!this.pubKey) {
-      throw new Error('invalid public key');
-    }
-    if (!(this.pubKey as any).encrypt) {
-      throw new Error('invalid rsa public key');
-    }
-    const utf8Bytes = forge.util.decode64(password);
-    const decrypted = (this.prvKey as any).decrypt(utf8Bytes, 'RSAES-PKCS1-V1_5');
-
-    return forge.util.encodeUtf8(decrypted);
+    // const buffer = new Buffer(password, 'base64');
+    const buffer = Buffer.alloc(this.base64Length(password), password, 'base64');
+    const decrypted = crypto.privateDecrypt(
+      {
+        ...this.options,
+        key: this.prvKey,
+      },
+      buffer,
+    );
+    return decrypted.toString('utf-8');
   }
 
   encrypt(password: string): string {
-    if (!this.pubKey) {
-      throw new Error('invalid private key');
-    }
-    if (!(this.pubKey as any).encrypt) {
-      throw new Error('invalid rsa private key');
-    }
-    const ut8Encoded = forge.util.decodeUtf8(password);
-
-    const encrypted = (this.pubKey as any).encrypt(ut8Encoded, 'RSAES-PKCS1-V1_5');
-
-    return forge.util.encode64(encrypted);
+    const buffer = new util.TextEncoder().encode(password);
+    const encrypted = crypto.publicEncrypt(
+      {
+        ...this.options,
+        key: this.prvKey,
+      },
+      buffer,
+    );
+    return encrypted.toString('base64');
   }
 }
