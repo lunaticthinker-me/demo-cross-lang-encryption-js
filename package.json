@@ -25,7 +25,7 @@
     "start": "ts-node ./src/index.ts",
     "test": "npm run test:single -- 'test/**/*.test.ts'",
     "test:junit": "npm run test -- --reporter mocha-junit-reporter --reporter-options mochaFile=.junit.xml",
-    "test:single": "nyc --reporter=html --reporter=lcov --reporter=text --extension .js mocha --forbid-only",
+    "test:single": "nyc --reporter=html --reporter=lcov --reporter=text --extension .ts mocha --forbid-only",
     "test:watch": "nodemon --exec 'npm run test'"
   },
   "repository": {
