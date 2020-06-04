@@ -4,7 +4,7 @@ import {AesCrypt, RsaCrypt, SslCrypt} from './democrypt';
 
 const password = 'th1s1smyp@ssw0rd';
 
-const doAes = async (): Promise<void> => {
+export const doAes = async (): Promise<void> => {
   console.log('Using AES:');
 
   const rsa = new AesCrypt('1234567890123456');
@@ -19,7 +19,7 @@ const doAes = async (): Promise<void> => {
   );
 };
 
-const doRsa = (): void => {
+export const doRsa = (): void => {
   console.log('Using RSA:');
 
   const rsa = new RsaCrypt(
@@ -40,7 +40,7 @@ const doRsa = (): void => {
   );
 };
 
-const doSsl = (): void => {
+export const doSsl = (): void => {
   console.log('Using SSL:');
 
   const ssl = new SslCrypt(
