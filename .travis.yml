@@ -30,14 +30,11 @@ cache:
   directories:
     - node_modules
 scripts:
-  - npm run change:language -- $LANGUAGE
   - npm i
   - npm run prettier:write
   - npm run lint:write
   - npm run jscpd
   - npm run test
-  - npm run test:junit
-  - npm run build
 after_script:
   - test $TRAVIS_NODE_VERSION == '12' && test $TRAVIS_OS_NAME == 'linux' && sonar-scanner
 notifications:
