@@ -3,26 +3,9 @@ os:
   - linux
   - osx
   - windows
-env:
-  - LANGUAGE=javascript
-  - LANGUAGE=typescript
 node_js: # a good example: https://github.com/pillarjs/router/blob/master/.travis.yml
-  # - "0.8"
-  # - "0.10"
-  # - "0.12"
-  # - "1.8"
-  # - "2.5"
-  # - "3.3"
-  # - "4.9"
-  # - "5.12"
-  # - "6.17"
-  # - "7.10"
-  # - "8.17"
-  # - "9.11"
-  - "10"
-  - "11"
-  - "12"
-  - "13"
+  - 12
+  - 13
   - lts/*
   - node
 sudo: false
