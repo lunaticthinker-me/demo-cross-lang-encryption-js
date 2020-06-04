@@ -19,26 +19,26 @@ const doAes = async (): Promise<void> => {
   );
 };
 
-// const doRsa = (): void => {
-//   console.log('Using RSA:');
+const doRsa = (): void => {
+  console.log('Using RSA:');
 
-//   const rsa = new RsaCrypt(
-//     path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
-//     path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
-//   );
+  const rsa = new RsaCrypt(
+    path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
+    path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+  );
 
-//   const encPasswordRsa = rsa.encrypt(password);
-//   const decPasswordRsa = rsa.decrypt(encPasswordRsa);
+  const encPasswordRsa = rsa.encrypt(password);
+  const decPasswordRsa = rsa.decrypt(encPasswordRsa);
 
-//   const decPasswordRsaCSharp = rsa.decrypt(
-//     'hXCUXgbnZ769npjP3HomRMhgu572HSCu/GZsauY2qRkaY0nL6zriBMgpCWxTl0KUOSebJNjG9idJjPdZPR8VITN307BYFCF1sF78DSHO//pjXUy8VozGs0t/cEsFhvXBcldlF5sQqAxsODA/q8CvYkBiZ3AVAa/O1FNbhwbm66Yv/cqfIvN2hIbW5wYLHcQCruGu+BLimQlzVgH1zE7+nAphBF1jXfx9mlHRWuLRnNvgJ9CBZniRlOfW9Py9lQfQTxxBbu40PEyzq66N/oHPcko+0TXBsHSqOn81iKxzbPA9jgSFndSOtFiPRMjGcJt1+2jhilB/mGGDuIQJ75puCg==',
-//   );
+  const decPasswordRsaCSharp = rsa.decrypt(
+    'hXCUXgbnZ769npjP3HomRMhgu572HSCu/GZsauY2qRkaY0nL6zriBMgpCWxTl0KUOSebJNjG9idJjPdZPR8VITN307BYFCF1sF78DSHO//pjXUy8VozGs0t/cEsFhvXBcldlF5sQqAxsODA/q8CvYkBiZ3AVAa/O1FNbhwbm66Yv/cqfIvN2hIbW5wYLHcQCruGu+BLimQlzVgH1zE7+nAphBF1jXfx9mlHRWuLRnNvgJ9CBZniRlOfW9Py9lQfQTxxBbu40PEyzq66N/oHPcko+0TXBsHSqOn81iKxzbPA9jgSFndSOtFiPRMjGcJt1+2jhilB/mGGDuIQJ75puCg==',
+  );
 
-//   console.log(
-//     `password: ${password} \nenc password: ${encPasswordRsa} \ndec password: ${decPasswordRsa} \n` +
-//       `dec password C#: ${decPasswordRsaCSharp} \n\n`,
-//   );
-// };
+  console.log(
+    `password: ${password} \nenc password: ${encPasswordRsa} \ndec password: ${decPasswordRsa} \n` +
+      `dec password C#: ${decPasswordRsaCSharp} \n\n`,
+  );
+};
 
 const doSsl = (): void => {
   console.log('Using SSL:');
