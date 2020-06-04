@@ -19,7 +19,7 @@ const doAes = async (): Promise<void> => {
   );
 };
 
-/** eslint-disable @typescript-eslint/no-unused-vars */
+/** eslint-disable no-unused-vars */
 const doRsa = (): void => {
   console.log('Using RSA:');
 
@@ -40,7 +40,7 @@ const doRsa = (): void => {
       `dec password C#: ${decPasswordRsaCSharp} \n\n`,
   );
 };
-/** eslint-enable @typescript-eslint/no-unused-vars */
+/** eslint-enable no-unused-vars */
 
 const doSsl = (): void => {
   console.log('Using SSL:');
