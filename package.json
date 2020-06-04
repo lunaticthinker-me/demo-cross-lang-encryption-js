@@ -4,7 +4,8 @@
   "description": "Demo Using Cross Lang Encryption :: JavaScript",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c --environment NODE_ENV:production",
+    "build": "echo",
+    "// build": "rollup -c --environment NODE_ENV:production",
     "clean": "rimraf coverage dist",
     "git-hook:pre-commit": "npm run prettier:write && npm run lint:write && npm run jscpd && npm run test",
     "inspector": "jsinspector server --port 9543",
