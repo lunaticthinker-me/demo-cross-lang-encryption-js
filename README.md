@@ -1,43 +1,10 @@
 # Project Title
 
-<img alt="JavaScript Logo" src="https://github.com/templ-project/javascript/blob/master/javascript.svg?raw=true" width="20%" align="right" />
-<img alt="TypeScript Logo" src="https://github.com/templ-project/javascript/blob/master/typescript.svg?raw=true" width="20%" align="right" />
+[![TravisCI](https://travis-ci.org/lunaticthinker-me/demo-cross-lang-encryption-js.svg?branch=master)](https://travis-ci.org/lunaticthinker-me/demo-cross-lang-encryption-js)
+![JSCPD](.jscpd/jscpd-badge.svg?raw=true)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/lunaticthinker-me/demo-cross-lang-encryption-js/issues)
 
-> **javascript** is a template project, designed by [Templ Project](http://templ-project.github.io).
->
-> **javascript** includes instructions for initializing a new
-> **JavaScript/[TypeScript](https://www.typescriptlang.org/)** project, and configuring it for development, unit
-> testing as well as code linting and analysis.
->
-> **javascript** implements:
->
-> - [jscpd](https://github.com/kucherenko/jscpd) for code analisys
-> - [prettier](https://prettier.io/) for code formatting
-> - [eslint](https://eslint.org/) for linting
->
-> By default, this implementation uses [npm](https://www.npmjs.com/), but you can easily change it to [yarn](https://yarnpkg.com/) or [pnpm](https://pnpm.js.org/).
->
-> **To use the template**, delete the content above, and fill in the following sections of this readme.
-> Also rune one of the following, to activate your desired language:
-
-```powershell
-npm run change:language -- javascript # to use javascript
-or
-npm run change:language -- typescript # to use typescript
-```
-
-<hr>
-<!-- > TODO: -->
-
-Set of shield/badges explaining where to find more information about the project (i.e. Where to look for unit test reports, where to see code coverage and code scans, etc.). You can find a lot of them on https://shields.io/)
-
-<!-- [![Npm Version](https://img.shields.io/npm/v/frameworks.svg)](https://www.npmjs.com/package/frameworks) -->
-<!-- [![HitCount](http://hits.dwyl.io/templ-project/javascript.svg)](http://hits.dwyl.io/templ-project/javascript) -->
-
-[![TravisCI](https://travis-ci.org/templ-project/javascript.svg?branch=master)](https://travis-ci.org/templ-project/javascript)
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/templ-project/javascript/issues)
-
-<!-- [![CircleCI](https://circleci.com/gh/templ-project/javascript.svg?style=shield)](https://circleci.com/gh/templ-project/javascript) -->
+<!-- [![CircleCI](https://circleci.com/gh/lunaticthinker-me/demo-cross-lang-encryption-js.svg?style=shield)](https://circleci.com/gh/lunaticthinker-me/demo-cross-lang-encryption-js) -->
 
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=templ-project_javascript&metric=alert_status)](https://sonarcloud.io/dashboard?id=templ-project_javascript)
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=templ-project_javascript&metric=coverage)](https://sonarcloud.io/component_measures/metric/coverage/list?id=templ-project_javascript)
@@ -189,13 +156,13 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-- [Dragos Cirjan](mailto:dragos.cirjan@gmail.com) - Initial work - [Go Template](/templ-project/javascript)
+- [Dragos Cirjan](mailto:dragos.cirjan@gmail.com) - Initial work - [Go Template](/lunaticthinker-me/demo-cross-lang-encryption-js)
 
 See also the list of contributors who participated in this project.
 
 ## Issues / Support
 
-Add a set of links to the [issues](/templ-project/javascript/issues) page/website, so people can know where to add issues/bugs or ask for support.
+Add a set of links to the [issues](/lunaticthinker-me/demo-cross-lang-encryption-js/issues) page/website, so people can know where to add issues/bugs or ask for support.
 
 ## License
 

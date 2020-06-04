@@ -6,7 +6,7 @@
         "**/*.min.js",
         "**/*.map"
     ],
-    "output": ".report",
+    "output": ".jscpd",
     "reporters": ["console", "badge"],
     "threshold": 0.1
   }
