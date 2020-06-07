@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 import {Crypt} from './generic';
 import {RsaCrypt} from './rsa';
 
-export class SslCrypt extends RsaCrypt implements Crypt {
+export class X509Crypt extends RsaCrypt implements Crypt {
   constructor(prvPath: string, pubPath: string) {
     super(prvPath, pubPath);
 

@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-import {AesCrypt, RsaCrypt, SslCrypt} from './democrypt';
+import {AesCrypt, RsaCrypt, X509Crypt} from './democrypt';
 
 const password = 'th1s1smyp@ssw0rd';
 
@@ -40,18 +40,18 @@ export const doRsa = (): void => {
   );
 };
 
-export const doSsl = (): void => {
+export const doX509 = (): void => {
   console.log('Using SSL:');
 
-  const ssl = new SslCrypt(
-    path.join(__dirname, '..', 'cert', 'ssl', 'key.pem'),
-    path.join(__dirname, '..', 'cert', 'ssl', 'cert.pem'),
+  const x509 = new X509Crypt(
+    path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
+    path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
   );
 
-  const encPasswordSsl = ssl.encrypt(password);
-  const decPasswordSsl = ssl.decrypt(encPasswordSsl);
+  const encPasswordSsl = x509.encrypt(password);
+  const decPasswordSsl = x509.decrypt(encPasswordSsl);
 
-  const decPasswordSslCSharp = ssl.decrypt(
+  const decPasswordSslCSharp = x509.decrypt(
     'ZPPx5HS4o79anStQY6hXDkM4f/GGB58UkvT9t6MPsfRMiCAMej6evMc7H4t7KwZM8NSpLyV/GnAtt95kk4HMWFVrHdQOeQz+LKJeVISx9znOUFQpyGsWGiDUBS5Qoudm3Gd18Wdmo2xSFqBRieke4s5DpcWt7EKazVOhEo81yC5g3nADiV1LtKhDez4bz9/NVdH4phhlBXaKd3hqMJFP8peRLj52wmzJ6SOvn8jyRUMujceq+TM/iUgEv89s1bZMqvgn+lgKh9U06f6RhXRMEP69I6nML7apd9UsMO8MX4X0WKoTIfyJmXuFBXPMlTkmPr/q+VL/EY5IX3f6TwPO6g==',
   );
 
@@ -63,8 +63,8 @@ export const doSsl = (): void => {
 
 const main = async (): Promise<void> => {
   await doAes();
-  // doRsa();
-  doSsl();
+  doRsa();
+  doX509();
 };
 
 main();

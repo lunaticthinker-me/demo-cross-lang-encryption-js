@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import {it, describe} from 'mocha';
 
-import {doAes, doRsa, doSsl} from './../src';
+import {doAes, doRsa, doX509} from './../src';
 
 describe('do', () => {
   it('doAes()', async () => {
@@ -14,6 +14,6 @@ describe('do', () => {
   });
 
   it('doSsl()', async () => {
-    doSsl();
+    doX509();
   });
 });
