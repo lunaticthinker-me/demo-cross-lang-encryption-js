@@ -41,7 +41,7 @@ export const doRsa = (): void => {
 };
 
 export const doX509 = (): void => {
-  console.log('Using SSL:');
+  console.log('Using X509:');
 
   const x509 = new X509Crypt(
     path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
