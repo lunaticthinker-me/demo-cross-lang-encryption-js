@@ -1,4 +1,4 @@
-# Project Title
+# Encrypt/Decrypt Example
 
 [![TravisCI](https://travis-ci.org/lunaticthinker-me/demo-cross-lang-encryption-js.svg?branch=master)](https://travis-ci.org/lunaticthinker-me/demo-cross-lang-encryption-js)
 ![JSCPD](.jscpd/jscpd-badge.svg?raw=true)
@@ -25,36 +25,18 @@
 [![Buy an item on our wishlist for us](https://img.shields.io/badge/wishlist-donate-yellow.svg)](https://dragoscirjan.me/wishlist)
 -->
 
-One Paragraph of project description goes here
-
-<!--
-Insert Table of Contents Here
-This can be done using [AlanWalk.markdown-toc](https://marketplace.visualstudio.com/items?itemName=AlanWalk.markdown-toc) plugin,
-which is also included in
-[itmcdev.generic-extension-pack](https://marketplace.visualstudio.com/items?itemName=itmcdev.generic-extension-pack) extension pack.
--->
-<!-- TOC -->
-
-- [Project Title](#project-title)
+- [Encrypt/Decrypt Example](#encryptdecrypt-example)
   - [Getting Started](#getting-started)
     - [Prereqiusites / Dependencies](#prereqiusites--dependencies)
-      - [For Windows](#for-windows)
-      - [For Linux](#for-linux)
-      - [Known Issues / Troubleshooting](#known-issues--troubleshooting)
     - [Installation](#installation)
-      - [Say what the step will be](#say-what-the-step-will-be)
-      - [And repeat](#and-repeat)
     - [Development](#development)
       - [Requirements](#requirements)
+        - [For Windows](#for-windows)
+        - [For Linux/Unix/OSX](#for-linuxunixosx)
     - [Testing](#testing)
-      - [Break down into (at least) unit tests](#break-down-into-at-least-unit-tests)
-      - [and end to end tests](#and-end-to-end-tests)
-      - [And coding style tests](#and-coding-style-tests)
-    - [Deployment](#deployment)
+    - [Running](#running)
   - [Authors](#authors)
   - [Issues / Support](#issues--support)
-  - [License](#license)
-  - [Changelog](#changelog)
 
 <!-- /TOC -->
 
@@ -62,101 +44,46 @@ which is also included in
 
 ### Prereqiusites / Dependencies
 
-What things you need to install the software and how to install them (based on each OS type).
-
-#### For Windows
-
-```bash
-# Give Examples
-
-npm install -g node-gyp windows-build-tools
-# Warning: Please note windows-build-tools will install MSVS which takes a
-# LONG amount of time.
-```
-
-#### For Linux
-
-```bash
-# Give Examples
-
-apt-get install build-essential mono
-npm install -y node-gyp
-```
-
-#### Known Issues / Troubleshooting
-
-Describe a list of known issues, and how to bypass them.
+Have [openssl]() installed.
 
 ### Installation
 
-A step by step series of examples that tell you how to get a development env running
-
-#### Say what the step will be
-
+```bash
+git clone https://github.com/lunaticthinker-me/demo-cross-lang-encryption-js
 ```
-Give the example
-```
-
-#### And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ### Development
 
-Explain any development process for the project, if necesary
-
-```
-give examples
-```
-
 #### Requirements
 
-- Please install [NodeJs](https://nodejs.org/en/). We support version 10.x and above.
-- Please instal a JavaScript/TypeScript IDE
-  - [Visual Studio Code](https://code.visualstudio.com/) with [ITMCDev Babel Extension Pack](https://marketplace.visualstudio.com/items?itemName=itmcdev.node-babel-extension-pack) or [ITMCDev TypeScript Extension Pack](https://marketplace.visualstudio.com/items?itemName=itmcdev.node-typescript-extension-pack)
-  - [Jetbrains WebStorm](https://www.jetbrains.com/webstorm/)
-  - [Vim](https://www.vim.org/) with [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim) and [HerringtonDarkholme/yats.vim](https://github.com/HerringtonDarkholme/yats.vim) extensions.
-  - Any other IDE you trust.
+- Please install [NodeJs](https://nodejs.org/en/download/). We support version 1.13.x and 1.14.x
+- Please instal a GoLang IDE
+  - [Visual Studio Code](https://code.visualstudio.com/) with at least [ITMCDev NodeJs Extension Pack](https://marketplace.visualstudio.com/items?itemName=itmcdev.node-extension-pack)
+  - [Jetbrains Webstorm](https://www.jetbrains.com/webstorm/)
+
+##### For Windows
+
+- Please install [git-scm](https://git-scm.com/download/win) tool.
+
+##### For Linux/Unix/OSX
+
+- Please install `git`
+
+```bash
+sudo apt-get install git -y
+```
 
 ### Testing
 
-Explain how to run the automated tests for this system
+Run unit tests using `npm run test`.
 
-#### Break down into (at least) unit tests
+### Running
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-#### and end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-#### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### Deployment
-
-Add additional notes about how to deploy this on a live system
+Please run `npm start`
 
 ## Authors
 
-- [Dragos Cirjan](mailto:dragos.cirjan@gmail.com) - Initial work - [Go Template](/lunaticthinker-me/demo-cross-lang-encryption-js)
+- [Dragos Cirjan](mailto:dragos.cirjan@gmail.com) - Initial work
 
 See also the list of contributors who participated in this project.
 
@@ -164,15 +91,11 @@ See also the list of contributors who participated in this project.
 
 Add a set of links to the [issues](/lunaticthinker-me/demo-cross-lang-encryption-js/issues) page/website, so people can know where to add issues/bugs or ask for support.
 
-## License
-
-(If the package is public, add licence)
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Changelog
+<!-- ## Changelog
 
 Small changelog history. The rest should be added to [CHANGELOG.md](CHANGELOG.md).
 
 See here a template for changelogs: https://keepachangelog.com/en/1.0.0/
 
-Also see this tool for automatically generating them: https://www.npmjs.com/package/changelog
+Also see this tool for automatically generating them: https://www.npmjs.com/package/changelog -->
+
