@@ -1,26 +1,28 @@
 import * as crypto from 'crypto';
 
+type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'OFB' | 'CTR' | 'GCM'
+
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
 
-  constructor(private hash: string) {
+  constructor(private hash: string, mode: AesMode = 'CFB') {
     switch (hash.length) {
       case 16:
         // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization
         // 'aes-128-<abbr>'
-        this.algorithm = 'aes-128-cfb';
+        this.algorithm = `aes-128-${mode.toLowerCase()}`;
         break;
       case 24:
-        this.algorithm = 'aes-192-cfb';
+        this.algorithm = `aes-192-${mode.toLowerCase()}`;
         break;
       case 32:
-        this.algorithm = 'aes-256-cfb';
+        this.algorithm = `aes-256-${mode.toLowerCase()}`;
         break;
       default:
         throw new Error('invalid hash length. must be 16, 24 or 32');
     }
   }
-
+  
   protected base64Length(password: string): number {
     return Math.floor((3 * password.length) / 4) - password.replace(/[^=]/gi, '').length;
   }
