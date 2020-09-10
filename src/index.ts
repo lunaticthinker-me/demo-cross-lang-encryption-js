@@ -2,69 +2,43 @@ import * as path from 'path';
 
 import {AesCrypt, RsaCrypt, X509Crypt} from './democrypt';
 
-const password = 'th1s1smyp@ssw0rd';
-
-export const doAes = async (): Promise<void> => {
-  console.log('Using AES:');
-
-  const rsa = new AesCrypt('1234567890123456');
-
-  const encPasswordAes = await rsa.encrypt(password);
-  const decPasswordAes = await rsa.decrypt(encPasswordAes);
-  const decPasswordAesCsharp = await rsa.decrypt('nrc2FBex/MjblB/skCbwlb6TxoavgZ6bFMpS7utIL/4=');
-
-  console.log(
-    `password: ${password} \nenc password: ${encPasswordAes} \ndec password: ${decPasswordAes} \n` +
-      `dec password C#: ${decPasswordAesCsharp} \n\n`,
-  );
-};
-
-export const doRsa = (): void => {
-  console.log('Using RSA:');
-
-  const rsa = new RsaCrypt(
-    path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
-    path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
-  );
-
-  const encPasswordRsa = rsa.encrypt(password);
-  const decPasswordRsa = rsa.decrypt(encPasswordRsa);
-
-  const decPasswordRsaCSharp = rsa.decrypt(
-    'hXCUXgbnZ769npjP3HomRMhgu572HSCu/GZsauY2qRkaY0nL6zriBMgpCWxTl0KUOSebJNjG9idJjPdZPR8VITN307BYFCF1sF78DSHO//pjXUy8VozGs0t/cEsFhvXBcldlF5sQqAxsODA/q8CvYkBiZ3AVAa/O1FNbhwbm66Yv/cqfIvN2hIbW5wYLHcQCruGu+BLimQlzVgH1zE7+nAphBF1jXfx9mlHRWuLRnNvgJ9CBZniRlOfW9Py9lQfQTxxBbu40PEyzq66N/oHPcko+0TXBsHSqOn81iKxzbPA9jgSFndSOtFiPRMjGcJt1+2jhilB/mGGDuIQJ75puCg==',
-  );
-
-  console.log(
-    `password: ${password} \nenc password: ${encPasswordRsa} \ndec password: ${decPasswordRsa} \n` +
-      `dec password C#: ${decPasswordRsaCSharp} \n\n`,
-  );
-};
-
-export const doX509 = (): void => {
-  console.log('Using X509:');
-
-  const x509 = new X509Crypt(
-    path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
-    path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
-  );
-
-  const encPasswordSsl = x509.encrypt(password);
-  const decPasswordSsl = x509.decrypt(encPasswordSsl);
-
-  const decPasswordSslCSharp = x509.decrypt(
-    'ZPPx5HS4o79anStQY6hXDkM4f/GGB58UkvT9t6MPsfRMiCAMej6evMc7H4t7KwZM8NSpLyV/GnAtt95kk4HMWFVrHdQOeQz+LKJeVISx9znOUFQpyGsWGiDUBS5Qoudm3Gd18Wdmo2xSFqBRieke4s5DpcWt7EKazVOhEo81yC5g3nADiV1LtKhDez4bz9/NVdH4phhlBXaKd3hqMJFP8peRLj52wmzJ6SOvn8jyRUMujceq+TM/iUgEv89s1bZMqvgn+lgKh9U06f6RhXRMEP69I6nML7apd9UsMO8MX4X0WKoTIfyJmXuFBXPMlTkmPr/q+VL/EY5IX3f6TwPO6g==',
-  );
-
-  console.log(
-    `password: ${password} \nenc password: ${encPasswordSsl} \ndec password: ${decPasswordSsl} \n` +
-      `dec password C#: ${decPasswordSslCSharp} \n\n`,
-  );
-};
+const data = 'th1s1smyp@ssw0rd';
+const aes128Hash = '1234567890123456';
+const aes192Hash = '123456789012345612345678';
+const aes256Hash = '12345678901234561234567890123456';
 
 const main = async (): Promise<void> => {
-  await doAes();
-  doRsa();
-  doX509();
+  const aesCfb128Encrpted = await new AesCrypt(aes128Hash).encrypt(data);
+  const aesCfb192Encrpted = await new AesCrypt(aes192Hash).encrypt(data);
+  const aesCfb256Encrpted = await new AesCrypt(aes256Hash).encrypt(data);
+
+  const aesCbc127Encrpted = await new AesCrypt(aes128Hash, 'CBC').encrypt(data);
+  const aesCbc192Encrpted = await new AesCrypt(aes192Hash, 'CBC').encrypt(data);
+  const aesCbc256Encrpted = await new AesCrypt(aes256Hash, 'CBC').encrypt(data);
+
+  console.log('AES Encrypted Values:');
+  console.log(`CFB 128 => ${aesCfb128Encrpted}`);
+  console.log(`CFB 192 => ${aesCfb192Encrpted}`);
+  console.log(`CFB 256 => ${aesCfb256Encrpted}`);
+  console.log(`CBC 128 => ${aesCbc127Encrpted}`);
+  console.log(`CBC 192 => ${aesCbc192Encrpted}`);
+  console.log(`CBC 256 => ${aesCbc256Encrpted}`);
+
+  console.log('RSA Encrypted Values:');
+  console.log(
+    new RsaCrypt(
+      path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+    ).encrypt(data),
+  );
+
+  console.log('X509 Encrypted Values:');
+  console.log(
+    new X509Crypt(
+      path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
+    ).encrypt(data),
+  );
 };
 
 main();

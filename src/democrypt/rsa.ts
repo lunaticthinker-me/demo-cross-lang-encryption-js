@@ -19,13 +19,13 @@ export class RsaCrypt implements Crypt {
     this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
   }
 
-  protected base64Length(password: string): number {
-    return Math.floor((3 * password.length) / 4) - password.replace(/[^=]/gi, '').length;
+  protected base64Length(cipher: string): number {
+    return Math.floor((3 * cipher.length) / 4) - cipher.replace(/[^=]/gi, '').length;
   }
 
-  decrypt(password: string): string {
+  decrypt(data: string): string {
     // const buffer = new Buffer(password, 'base64');
-    const buffer = Buffer.alloc(this.base64Length(password), password, 'base64');
+    const buffer = Buffer.alloc(this.base64Length(data), data, 'base64');
     const decrypted = crypto.privateDecrypt(
       {
         ...this.options,
@@ -36,8 +36,8 @@ export class RsaCrypt implements Crypt {
     return decrypted.toString('utf-8');
   }
 
-  encrypt(password: string): string {
-    const buffer = new util.TextEncoder().encode(password);
+  encrypt(cipher: string): string {
+    const buffer = new util.TextEncoder().encode(cipher);
     const encrypted = crypto.publicEncrypt(
       {
         ...this.options,
