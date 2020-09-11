@@ -1,11 +1,11 @@
 import * as crypto from 'crypto';
 
-type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'OFB' | 'CTR' | 'GCM';
+type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
 
-  constructor(private hash: string, mode: AesMode = 'CFB') {
+  constructor(private hash: string, mode: AesMode = 'CFB8') {
     switch (hash.length) {
       case 16:
         // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization
@@ -54,7 +54,7 @@ export class AesCrypt /*implements Crypt*/ {
     });
   }
 
-  async encrypt(cypher: string): Promise<string> {
+  async encrypt(plaintext: string): Promise<string> {
     return new Promise((resolve) => {
       let encrypted: Buffer;
 
@@ -72,7 +72,7 @@ export class AesCrypt /*implements Crypt*/ {
         const buffer = Buffer.concat([iv, encrypted]);
         resolve(buffer.toString('base64'));
       });
-      cipher.write(cypher);
+      cipher.write(plaintext);
       cipher.end();
     });
   }
