@@ -12,6 +12,10 @@ const main = async (): Promise<void> => {
   const aesCfb192Encrpted = await new AesCrypt(aes192Hash).encrypt(data);
   const aesCfb256Encrpted = await new AesCrypt(aes256Hash).encrypt(data);
 
+  const aesCfb8127Encrpted = await new AesCrypt(aes128Hash, 'CFB8').encrypt(data);
+  const aesCfb8192Encrpted = await new AesCrypt(aes192Hash, 'CFB8').encrypt(data);
+  const aesCfb8256Encrpted = await new AesCrypt(aes256Hash, 'CFB8').encrypt(data);
+
   const aesCbc127Encrpted = await new AesCrypt(aes128Hash, 'CBC').encrypt(data);
   const aesCbc192Encrpted = await new AesCrypt(aes192Hash, 'CBC').encrypt(data);
   const aesCbc256Encrpted = await new AesCrypt(aes256Hash, 'CBC').encrypt(data);
@@ -20,6 +24,9 @@ const main = async (): Promise<void> => {
   console.log(`CFB 128 => ${aesCfb128Encrpted}`);
   console.log(`CFB 192 => ${aesCfb192Encrpted}`);
   console.log(`CFB 256 => ${aesCfb256Encrpted}`);
+  console.log(`CFB8 128 => ${aesCfb8127Encrpted}`);
+  console.log(`CFB8 192 => ${aesCfb8192Encrpted}`);
+  console.log(`CFB8 256 => ${aesCfb8256Encrpted}`);
   console.log(`CBC 128 => ${aesCbc127Encrpted}`);
   console.log(`CBC 192 => ${aesCbc192Encrpted}`);
   console.log(`CBC 256 => ${aesCbc256Encrpted}`);

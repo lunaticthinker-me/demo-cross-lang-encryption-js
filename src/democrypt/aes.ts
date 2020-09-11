@@ -5,7 +5,7 @@ type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
 
-  constructor(private hash: string, mode: AesMode = 'CFB8') {
+  constructor(private hash: string, mode: AesMode = 'CFB') {
     switch (hash.length) {
       case 16:
         // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization

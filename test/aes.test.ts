@@ -66,18 +66,18 @@ describe('AesCrypt', () => {
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   describe('decrypt() on C# encrypted', () => {
-    it('aes-128-cfb', async () => {
-      const aes = new AesCrypt(aes128Hash);
+    it('aes-128-cfb8', async () => {
+      const aes = new AesCrypt(aes128Hash, 'CFB8');
       const decrypted = await aes.decrypt('byuCTbdRr+ypozUmNa5RjEUlCwvKMzLHb2TVEqiYFJo=');
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-192-cfb', async () => {
-      const aes = new AesCrypt(aes192Hash);
+    it('aes-192-cfb8', async () => {
+      const aes = new AesCrypt(aes192Hash, 'CFB8');
       const decrypted = await aes.decrypt('bXd/eYTJpyFy53PawFW5LzPIGjbdQL/RrE8rz1BwYD0=');
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-256-cfb', async () => {
-      const aes = new AesCrypt(aes256Hash);
+    it('aes-256-cfb8', async () => {
+      const aes = new AesCrypt(aes256Hash, 'CFB8');
       const decrypted = await aes.decrypt('bED7+lp70X533ISjLScRYe7hgEFddreAGBoIr5gBLxM=');
       expect(decrypted).to.equal(data[0]);
     });
@@ -99,7 +99,7 @@ describe('AesCrypt', () => {
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  describe.skip('decrypt() on GoLang encrypted', () => {
+  describe.skip('decrypt() on Go encrypted', () => {
     it('aes-128-cfb', async () => {
       const aes = new AesCrypt(aes128Hash);
       const decrypted = await aes.decrypt('5WPWeBKWEafSfZCAscojoXjpr6AG78cC7Sqx52X9/fo=');
