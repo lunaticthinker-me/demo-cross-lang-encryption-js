@@ -5,7 +5,7 @@ import * as path from 'path';
 import {it, describe} from 'mocha';
 
 import {RsaCrypt} from './../src/democrypt';
-import {data} from './utils';
+import {data} from '../src/democrypt/utils';
 
 describe('RsaCrypt', function () {
   let rsa: RsaCrypt;
@@ -22,6 +22,7 @@ describe('RsaCrypt', function () {
     expect(rsa instanceof RsaCrypt).to.be.true;
   });
 
+  // eslint-disable-next-line mocha/no-setup-in-describe
   for (const item of data) {
     it(`encrypt/decrypt => '${item}'`, function () {
       const encrypted = rsa.encrypt(item);
@@ -39,7 +40,7 @@ describe('RsaCrypt', function () {
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  it('decrypt() from GoLang encrypted', function () {
+  it.skip('decrypt() from GoLang encrypted', function () {
     const decrypted = rsa.decrypt(
       'FxGi+JNXalIIL3Y+poyP4F3j9Mp4yR75Rbe7yx8yI3MNix95OI3LY6jBYpGD5nhXoaYKgX2NrmZcaAeNg7uzIH3m95ULMrboa0Br3IPmEw2aMwW8uxDEL/I4x7Uvlux1QCHnv3rnYNX/Hyipg3DMeKKppmcAYZ1zpfatH6qXMD0vGttpX1KksUe/3TN/oz8swPecAePFg6I/MPcndCxIeVfTXLqUCpQbxvmN7GYQpWbxXGB7S6rQpxNkZLcssH6XHwM/6LRQ3laQ+U+o3kL/bCUUrSB27B6yAB65I0SsLyhFY+bxDjugxOND0MPaVxVpa7MM5lileUL8uqG5U58sBg==',
     );

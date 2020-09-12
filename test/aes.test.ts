@@ -3,62 +3,122 @@ import {expect} from 'chai';
 import {it, describe} from 'mocha';
 
 import {AesCrypt} from './../src/democrypt/aes';
-import {aes128Hash, aes192Hash, aes256Hash, data} from './utils';
+import {
+  aes128Hash,
+  aes192Hash,
+  aes256Hash,
+  data,
+  CS_AES_CFB8_128,
+  CS_AES_CFB8_192,
+  CS_AES_CFB8_256,
+  CS_AES_CBC_128,
+  CS_AES_CBC_192,
+  CS_AES_CBC_256,
+  GO_AES_CFB_128,
+  GO_AES_CFB_192,
+  GO_AES_CFB_256,
+  GO_AES_CBC_128,
+  GO_AES_CBC_192,
+  GO_AES_CBC_256,
+  PY_AES_CFB8_128,
+  PY_AES_CFB8_192,
+  PY_AES_CFB8_256,
+  PY_AES_CBC_128,
+  PY_AES_CBC_192,
+  PY_AES_CBC_256,
+} from '../src/democrypt/utils';
 
 describe('AesCrypt', () => {
+  let aes128Cfb: AesCrypt;
+  let aes192Cfb: AesCrypt;
+  let aes256Cfb: AesCrypt;
+  let aes128Cfb8: AesCrypt;
+  let aes192Cfb8: AesCrypt;
+  let aes256Cfb8: AesCrypt;
+  let aes128Cbc: AesCrypt;
+  let aes192Cbc: AesCrypt;
+  let aes256Cbc: AesCrypt;
+
+  // eslint-disable-next-line mocha/no-mocha-arrows
+  before(() => {
+    aes128Cfb = new AesCrypt(aes128Hash);
+    aes192Cfb = new AesCrypt(aes192Hash);
+    aes256Cfb = new AesCrypt(aes256Hash);
+    aes128Cfb8 = new AesCrypt(aes128Hash, 'CFB8');
+    aes192Cfb8 = new AesCrypt(aes192Hash, 'CFB8');
+    aes256Cfb8 = new AesCrypt(aes256Hash, 'CFB8');
+    aes128Cbc = new AesCrypt(aes128Hash, 'CBC');
+    aes192Cbc = new AesCrypt(aes192Hash, 'CBC');
+    aes256Cbc = new AesCrypt(aes256Hash, 'CBC');
+  });
+
   it('new AesCrypt()', async () => {
-    const aes = new AesCrypt(aes192Hash);
-    expect(aes instanceof AesCrypt).to.be.true;
+    expect(aes128Cfb instanceof AesCrypt).to.be.true;
   });
 
   for (const item of data) {
     describe(`encrypt/decrypt => '${item}'`, () => {
       it('aes-128-cfb', async () => {
-        const aes = new AesCrypt(aes128Hash);
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes128Cfb.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes128Cfb.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
       it('aes-192-cfb', async () => {
-        const aes = new AesCrypt(aes192Hash);
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes192Cfb.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes192Cfb.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
       it('aes-256-cfb', async () => {
-        const aes = new AesCrypt(aes256Hash);
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes256Cfb.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes256Cfb.decrypt(encrypted);
+        expect(decrypted).to.equal(item);
+      });
+      it('aes-128-cfb8', async () => {
+        const encrypted = await aes128Cfb8.encrypt(item);
+        expect(encrypted).to.be.a('string');
+
+        const decrypted = await aes128Cfb8.decrypt(encrypted);
+        expect(decrypted).to.equal(item);
+      });
+      it('aes-192-cfb8', async () => {
+        const encrypted = await aes192Cfb8.encrypt(item);
+        expect(encrypted).to.be.a('string');
+
+        const decrypted = await aes192Cfb8.decrypt(encrypted);
+        expect(decrypted).to.equal(item);
+      });
+      it('aes-256-cfb8', async () => {
+        const encrypted = await aes256Cfb8.encrypt(item);
+        expect(encrypted).to.be.a('string');
+
+        const decrypted = await aes256Cfb8.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
       it('aes-128-cbc', async () => {
-        const aes = new AesCrypt(aes128Hash, 'CBC');
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes128Cbc.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes128Cbc.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
       it('aes-192-cbc', async () => {
-        const aes = new AesCrypt(aes192Hash, 'CBC');
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes192Cbc.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes192Cbc.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
       it('aes-256-cbc', async () => {
-        const aes = new AesCrypt(aes256Hash, 'CBC');
-        const encrypted = await aes.encrypt(item);
+        const encrypted = await aes256Cbc.encrypt(item);
         expect(encrypted).to.be.a('string');
 
-        const decrypted = await aes.decrypt(encrypted);
+        const decrypted = await aes256Cbc.decrypt(encrypted);
         expect(decrypted).to.equal(item);
       });
     });
@@ -67,104 +127,83 @@ describe('AesCrypt', () => {
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   describe('decrypt() on C# encrypted', () => {
     it('aes-128-cfb8', async () => {
-      const aes = new AesCrypt(aes128Hash, 'CFB8');
-      const decrypted = await aes.decrypt('byuCTbdRr+ypozUmNa5RjEUlCwvKMzLHb2TVEqiYFJo=');
+      const decrypted = await aes128Cfb8.decrypt(CS_AES_CFB8_128);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-192-cfb8', async () => {
-      const aes = new AesCrypt(aes192Hash, 'CFB8');
-      const decrypted = await aes.decrypt('bXd/eYTJpyFy53PawFW5LzPIGjbdQL/RrE8rz1BwYD0=');
+      const decrypted = await aes192Cfb8.decrypt(CS_AES_CFB8_192);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-256-cfb8', async () => {
-      const aes = new AesCrypt(aes256Hash, 'CFB8');
-      const decrypted = await aes.decrypt('bED7+lp70X533ISjLScRYe7hgEFddreAGBoIr5gBLxM=');
+      const decrypted = await aes256Cfb8.decrypt(CS_AES_CFB8_256);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-128-cbc', async () => {
-      const aes = new AesCrypt(aes128Hash, 'CBC');
-      const decrypted = await aes.decrypt('uf0v6GuYKU1gw8LTQl47vAdpDcyyumxL8xvHoE7rdVjxeinGZRFYwMmwwI2H1fZU');
+      const decrypted = await aes128Cbc.decrypt(CS_AES_CBC_128);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-192-cbc', async () => {
-      const aes = new AesCrypt(aes192Hash, 'CBC');
-      const decrypted = await aes.decrypt('jiDv5Twu6SQ9wMA0F5+2+dOGvfRAxzKZpMillk/HSIFbxQe6JtkVXUUqCqjUswUR');
+      const decrypted = await aes192Cbc.decrypt(CS_AES_CBC_192);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-256-cbc', async () => {
-      const aes = new AesCrypt(aes256Hash, 'CBC');
-      const decrypted = await aes.decrypt('5QeOHaKlc+xPlVBVJTEx8Ms3I0at4B+OEQJxrJWHK4MEqnCuvYyxmryMTOmf1Q8H');
+      const decrypted = await aes256Cbc.decrypt(CS_AES_CBC_256);
       expect(decrypted).to.equal(data[0]);
     });
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  describe.skip('decrypt() on Go encrypted', () => {
-    it('aes-128-cfb', async () => {
-      const aes = new AesCrypt(aes128Hash);
-      const decrypted = await aes.decrypt('5WPWeBKWEafSfZCAscojoXjpr6AG78cC7Sqx52X9/fo=');
+  describe('decrypt() on Go encrypted', () => {
+    it('aes-128-cfb8', async () => {
+      const decrypted = await aes128Cfb.decrypt(GO_AES_CFB_128);
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-192-cfb', async () => {
-      const aes = new AesCrypt(aes192Hash);
-      const decrypted = await aes.decrypt('lkyhuJGvKOwOT5cKYJz9mmO6ND2PGo/XOM5mv5OIvYM=');
+    it('aes-192-cfb8', async () => {
+      const decrypted = await aes192Cfb.decrypt(GO_AES_CFB_192);
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-256-cfb', async () => {
-      const aes = new AesCrypt(aes256Hash);
-      const decrypted = await aes.decrypt('bmcX3+xKhz3Xml4/mQTL9qILe7SEIOfocERs4ZcqD74=');
+    it('aes-256-cfb8', async () => {
+      const decrypted = await aes256Cfb.decrypt(GO_AES_CFB_256);
       expect(decrypted).to.equal(data[0]);
     });
-    // algorithm missmatch
     it('aes-128-cbc', async () => {
-      const aes = new AesCrypt(aes128Hash, 'CBC');
-      const decrypted = await aes.decrypt('6u9RmbQs5XQQEIug+lP1+zRssBPfkQ5e0Y78TUbCtUE=');
+      const decrypted = await aes128Cbc.decrypt(GO_AES_CBC_128);
       expect(decrypted).to.equal(data[0]);
     });
-    // algorithm missmatch
     it('aes-192-cbc', async () => {
-      const aes = new AesCrypt(aes192Hash, 'CBC');
-      const decrypted = await aes.decrypt('hCNI0Yb90jKAhds4x9c4G0c5CwtRxMtCfe4As3JIq8A=');
+      const decrypted = await aes192Cbc.decrypt(GO_AES_CBC_192);
       expect(decrypted).to.equal(data[0]);
     });
-    // algorithm missmatch
     it('aes-256-cbc', async () => {
-      const aes = new AesCrypt(aes256Hash, 'CBC');
-      const decrypted = await aes.decrypt('dXP9pSWf6cgAegouT5UDTfkDE+t7A3j9khe7N/vNB00=');
+      const decrypted = await aes256Cbc.decrypt(GO_AES_CBC_256);
       expect(decrypted).to.equal(data[0]);
     });
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  describe.skip('decrypt() on Python encrypted', () => {
-    it('aes-128-cfb', async () => {
-      const aes = new AesCrypt(aes128Hash);
-      const decrypted = await aes.decrypt('');
+  describe('decrypt() on Py encrypted', () => {
+    it('aes-128-cfb8', async () => {
+      const decrypted = await aes128Cfb8.decrypt(PY_AES_CFB8_128);
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-192-cfb', async () => {
-      const aes = new AesCrypt(aes192Hash);
-      const decrypted = await aes.decrypt('');
+    it('aes-192-cfb8', async () => {
+      const decrypted = await aes192Cfb8.decrypt(PY_AES_CFB8_192);
       expect(decrypted).to.equal(data[0]);
     });
-    it('aes-256-cfb', async () => {
-      const aes = new AesCrypt(aes256Hash);
-      const decrypted = await aes.decrypt('');
+    it('aes-256-cfb8', async () => {
+      const decrypted = await aes256Cfb8.decrypt(PY_AES_CFB8_256);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-128-cbc', async () => {
-      const aes = new AesCrypt(aes128Hash, 'CBC');
-      const decrypted = await aes.decrypt('');
+      const decrypted = await aes128Cbc.decrypt(PY_AES_CBC_128);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-192-cbc', async () => {
-      const aes = new AesCrypt(aes192Hash, 'CBC');
-      const decrypted = await aes.decrypt('');
+      const decrypted = await aes192Cbc.decrypt(PY_AES_CBC_192);
       expect(decrypted).to.equal(data[0]);
     });
     it('aes-256-cbc', async () => {
-      const aes = new AesCrypt(aes256Hash, 'CBC');
-      const decrypted = await aes.decrypt('');
+      const decrypted = await aes256Cbc.decrypt(PY_AES_CBC_256);
       expect(decrypted).to.equal(data[0]);
     });
   });
