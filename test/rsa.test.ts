@@ -1,54 +1,80 @@
 import {expect} from 'chai';
+import * as crypto from 'crypto';
 
 import * as path from 'path';
 
 import {it, describe} from 'mocha';
 
 import {RsaCrypt} from './../src/democrypt';
-import {data} from './utils';
+import {data, CS_RSA_PKCS1V1_5, CS_RSA_OAEP, GO_RSA_OAEP, GO_RSA_PKCS1V1_5, PY_RSA_PKCS1V1_5, PY_RSA_OAEP} from '../src/democrypt/utils';
 
 describe('RsaCrypt', function () {
-  let rsa: RsaCrypt;
+  let rsaOaep: RsaCrypt;
+  let rsaPkcs1v15: RsaCrypt;
 
   // eslint-disable-next-line mocha/no-mocha-arrows
   before(() => {
-    rsa = new RsaCrypt(
+    rsaOaep = new RsaCrypt(
+      path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+      {
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+      }
+    );
+    rsaPkcs1v15 = new RsaCrypt(
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
     );
   });
 
   it('new RsaCrypt()', function () {
-    expect(rsa instanceof RsaCrypt).to.be.true;
+    expect(rsaPkcs1v15 instanceof RsaCrypt).to.be.true;
   });
 
+  // eslint-disable-next-line mocha/no-setup-in-describe
   for (const item of data) {
     it(`encrypt/decrypt => '${item}'`, function () {
-      const encrypted = rsa.encrypt(item);
+      const encrypted = rsaPkcs1v15.encrypt(item);
       expect(encrypted).to.be.a('string');
 
-      const decrypted = rsa.decrypt(encrypted);
+      const decrypted = rsaPkcs1v15.decrypt(encrypted);
       expect(decrypted).to.equal(item);
     });
   }
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  it.skip('decrypt() from C# encrypted', function () {
-    const decrypted = rsa.decrypt('');
+  it('decrypt(PKCS1V15) from C# encrypted', function () {
+    const decrypted = rsaPkcs1v15.decrypt(CS_RSA_PKCS1V1_5);
     expect(decrypted).to.equal(data[0]);
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  it('decrypt() from GoLang encrypted', function () {
-    const decrypted = rsa.decrypt(
-      'FxGi+JNXalIIL3Y+poyP4F3j9Mp4yR75Rbe7yx8yI3MNix95OI3LY6jBYpGD5nhXoaYKgX2NrmZcaAeNg7uzIH3m95ULMrboa0Br3IPmEw2aMwW8uxDEL/I4x7Uvlux1QCHnv3rnYNX/Hyipg3DMeKKppmcAYZ1zpfatH6qXMD0vGttpX1KksUe/3TN/oz8swPecAePFg6I/MPcndCxIeVfTXLqUCpQbxvmN7GYQpWbxXGB7S6rQpxNkZLcssH6XHwM/6LRQ3laQ+U+o3kL/bCUUrSB27B6yAB65I0SsLyhFY+bxDjugxOND0MPaVxVpa7MM5lileUL8uqG5U58sBg==',
-    );
+  it('decrypt(OAEP) from C# encrypted', function () {
+    const decrypted = rsaOaep.decrypt(CS_RSA_OAEP);
     expect(decrypted).to.equal(data[0]);
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  it.skip('decrypt() from Python encrypted', function () {
-    const decrypted = rsa.decrypt('');
+  it('decrypt(PKCS1V15) from Go encrypted', function () {
+    const decrypted = rsaPkcs1v15.decrypt(GO_RSA_PKCS1V1_5);
+    expect(decrypted).to.equal(data[0]);
+  });
+
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it.skip('decrypt(OAEP) from Go encrypted', function () {
+    const decrypted = rsaOaep.decrypt(GO_RSA_OAEP);
+    expect(decrypted).to.equal(data[0]);
+  });
+
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it('decrypt(PKCS1V15) from Py encrypted', function () {
+    const decrypted = rsaPkcs1v15.decrypt(PY_RSA_PKCS1V1_5);
+    expect(decrypted).to.equal(data[0]);
+  });
+
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it('decrypt(OAEP) from Py encrypted', function () {
+    const decrypted = rsaOaep.decrypt(PY_RSA_OAEP);
     expect(decrypted).to.equal(data[0]);
   });
 });

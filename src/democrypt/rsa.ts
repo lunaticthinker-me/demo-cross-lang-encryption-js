@@ -14,7 +14,11 @@ export class RsaCrypt implements Crypt {
     padding: crypto.constants.RSA_PKCS1_PADDING,
   };
 
-  constructor(prvPath: string, pubPath: string) {
+  constructor(prvPath: string, pubPath: string, options?: Partial<crypto.RsaPrivateKey>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
     this.prvKey = fs.readFileSync(prvPath).toString('utf-8');
     this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
   }
@@ -24,7 +28,6 @@ export class RsaCrypt implements Crypt {
   }
 
   decrypt(data: string): string {
-    // const buffer = new Buffer(password, 'base64');
     const buffer = Buffer.alloc(this.base64Length(data), data, 'base64');
     const decrypted = crypto.privateDecrypt(
       {

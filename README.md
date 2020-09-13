@@ -11,9 +11,10 @@
 [![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=lunaticthinker-me_demo-cross-lang-encryption-js&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=lunaticthinker-me_demo-cross-lang-encryption-js)
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=lunaticthinker-me_demo-cross-lang-encryption-js&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=lunaticthinker-me_demo-cross-lang-encryption-js)
 
-<!--
 [![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://patreon.com/dragoscirjan)
 [![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UMMN8JPLVAUR4&source=url)
+
+<!--
 [![Donate to this project using Flattr](https://img.shields.io/badge/flattr-donate-yellow.svg)](https://flattr.com/profile/balupton)
 [![Donate to this project using Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg)](https://liberapay.com/dragoscirjan)
 [![Donate to this project using Thanks App](https://img.shields.io/badge/thanksapp-donate-yellow.svg)](https://givethanks.app/donate/npm/badges)
@@ -26,6 +27,7 @@
 -->
 
 - [Encrypt/Decrypt Example](#encryptdecrypt-example)
+  - [Compatibility](#compatibility)
   - [Getting Started](#getting-started)
     - [Prereqiusites / Dependencies](#prereqiusites--dependencies)
     - [Installation](#installation)
@@ -39,6 +41,16 @@
   - [Issues / Support](#issues--support)
 
 <!-- /TOC -->
+
+## Compatibility
+
+| Algorithm / Language (Go) | C# | Go | Js | Py |
+|---|---|---|---|---|
+| AES/CFB | ? | ✓ | ✓ | ✕ |
+| AES/CFB8 | ✓ | ✓ | ✓ | ✓ |
+| AES/CBC | ✓ | ✓ | ✓ | ✓ |
+| RSA/OAEP | ✓ | ✕ | ✓ | ✓ |
+| RSA/PCKS1V15 | ✓ | ✓ | ✓ | ✓ |
 
 ## Getting Started
 

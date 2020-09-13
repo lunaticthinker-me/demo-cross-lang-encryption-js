@@ -5,7 +5,7 @@ type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
 
-  constructor(private hash: string, mode: AesMode = 'CFB') {
+  constructor(private hash: string, protected mode: AesMode = 'CFB') {
     switch (hash.length) {
       case 16:
         // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization
@@ -27,16 +27,28 @@ export class AesCrypt /*implements Crypt*/ {
     return Math.floor((3 * password.length) / 4) - password.replace(/[^=]/gi, '').length;
   }
 
-  async decrypt(data: string): Promise<string> {
+  /**
+   * @param {string} cipherText A Base64 encoded string
+   * @return {string} A UTF8 encoded string
+   */
+  async decrypt(cipherText: string): Promise<string> {
+    const cipherBuffer = Buffer.alloc(this.base64Length(cipherText), cipherText, 'base64');
+    return this.decryptBytes(cipherBuffer).then((cipher) => cipher.toString('utf-8'));
+  }
+
+  /**
+   * @param {Buffer} cipherText An AES encrypted buffer UTF8 encoded
+   * @return {Buffer} An AES decrypted buffer UTF8 encoded
+   */
+  async decryptBytes(cipherText: Buffer): Promise<Buffer> {
     return new Promise((resolve) => {
       const key = this.hash;
 
-      const buffer = Buffer.alloc(this.base64Length(data), data, 'base64');
       const iv = Buffer.alloc(16, 0);
-      buffer.copy(iv, 0, 0, 16);
+      cipherText.copy(iv, 0, 0, 16);
 
-      const encrypted = Buffer.alloc(buffer.length - 16, 0);
-      buffer.copy(encrypted, 0, 16, buffer.length);
+      const encrypted = Buffer.alloc(cipherText.length - 16, 0);
+      cipherText.copy(encrypted, 0, 16, cipherText.length);
 
       const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
       let decrypted: Buffer;
@@ -47,7 +59,7 @@ export class AesCrypt /*implements Crypt*/ {
         }
       });
       decipher.on('end', () => {
-        resolve(decrypted.toString('utf-8'));
+        resolve(decrypted);
       });
       decipher.write(encrypted);
       decipher.end();
@@ -55,6 +67,12 @@ export class AesCrypt /*implements Crypt*/ {
   }
 
   async encrypt(plaintext: string): Promise<string> {
+    return this.encryptBytes(Buffer.alloc(plaintext.length, plaintext, 'utf-8')).then((cipher) =>
+      cipher.toString('base64'),
+    );
+  }
+
+  async encryptBytes(plaintext: Buffer): Promise<Buffer> {
     return new Promise((resolve) => {
       let encrypted: Buffer;
 
@@ -70,7 +88,7 @@ export class AesCrypt /*implements Crypt*/ {
       });
       cipher.on('end', () => {
         const buffer = Buffer.concat([iv, encrypted]);
-        resolve(buffer.toString('base64'));
+        resolve(buffer);
       });
       cipher.write(plaintext);
       cipher.end();

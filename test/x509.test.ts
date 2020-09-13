@@ -5,7 +5,7 @@ import * as path from 'path';
 import {it, describe} from 'mocha';
 
 import {X509Crypt} from './../src/democrypt';
-import {data} from './utils';
+import {data} from '../src/democrypt/utils';
 
 describe('X509Crypt', function () {
   let x509: X509Crypt;
@@ -22,6 +22,7 @@ describe('X509Crypt', function () {
     expect(x509 instanceof X509Crypt).to.be.true;
   });
 
+  // eslint-disable-next-line mocha/no-setup-in-describe
   for (const item of data) {
     it(`encrypt/decrypt => '${item}'`, function () {
       const encrypted = x509.encrypt(item);
@@ -39,7 +40,7 @@ describe('X509Crypt', function () {
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  it('decrypt() from GoLang encrypted', function () {
+  it.skip('decrypt() from GoLang encrypted', function () {
     const decrypted = x509.decrypt(
       'leFEibNhepKTLi2Er/BtavLejoKJ895LnkNgLEcolG4FOak7n/dKa1cYAZNrHqA/gu/Sd2HBdRirNI2OyJ766Lm5I5iiMQzLGobFI4+jyeLGDCjo2RjySLFBVjPKKbjo3RxcxpS6C/V3qvet3Px2VwdzCEfB3Ffpimsk6RblaZgLPl6YzRQsV1qkYtxxdsk3mdlR3eyXxSjfSUlx1bSZvv/BD2sCJtq+SiHOP9QfvQ8iIG5IbZtNdT95oaQ92bpGxuWA76DYqbP4C0s/Iv4w/GvV0mcgxcK1ePuY3wzCeHy6a80l36OaQGXf6xEJffvQ/QRz7BaEG2V0Fz/Ezx8L9g==',
     );
