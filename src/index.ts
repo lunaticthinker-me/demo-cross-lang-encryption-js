@@ -1,7 +1,8 @@
 import * as path from 'path';
+import * as crypto from 'crypto';
 
 import {AesCrypt, RsaCrypt, X509Crypt} from './democrypt';
-import {data, aes128Hash, aes192Hash, aes256Hash} from './democrypt/util';
+import {data, aes128Hash, aes192Hash, aes256Hash} from './democrypt/utils';
 
 const main = async (): Promise<void> => {
   const aesCfb128Encrpted = await new AesCrypt(aes128Hash).encrypt(data[0]);
@@ -29,9 +30,18 @@ const main = async (): Promise<void> => {
 
   console.log('// RSA Encrypted Values:');
   console.log(
-    `JS_RSA = '${new RsaCrypt(
+    `JS_RSA_PKCS1V1_5 = '${new RsaCrypt(
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+    ).encrypt(data[0])}'`,
+  );
+  console.log(
+    `JS_RSA_OAEP = '${new RsaCrypt(
+      path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+      {
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+      }
     ).encrypt(data[0])}'`,
   );
 
