@@ -4,51 +4,51 @@ import * as path from 'path';
 
 import {it, describe} from 'mocha';
 
-import {RsaCrypt} from './../src/democrypt';
+import {X509Crypt} from './../src/democrypt';
 import {data} from './utils';
 
-describe('RsaCrypt', function () {
-  let rsa: RsaCrypt;
+describe('X509Crypt', function () {
+  let x509: X509Crypt;
 
   // eslint-disable-next-line mocha/no-mocha-arrows
   before(() => {
-    rsa = new RsaCrypt(
-      path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
-      path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
+    x509 = new X509Crypt(
+      path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
     );
   });
 
-  it('new RsaCrypt()', function () {
-    expect(rsa instanceof RsaCrypt).to.be.true;
+  it('new X509Crypt()', function () {
+    expect(x509 instanceof X509Crypt).to.be.true;
   });
 
   for (const item of data) {
     it(`encrypt/decrypt => '${item}'`, function () {
-      const encrypted = rsa.encrypt(item);
+      const encrypted = x509.encrypt(item);
       expect(encrypted).to.be.a('string');
 
-      const decrypted = rsa.decrypt(encrypted);
+      const decrypted = x509.decrypt(encrypted);
       expect(decrypted).to.equal(item);
     });
   }
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   it.skip('decrypt() from C# encrypted', function () {
-    const decrypted = rsa.decrypt('');
+    const decrypted = x509.decrypt('');
     expect(decrypted).to.equal(data[0]);
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   it('decrypt() from GoLang encrypted', function () {
-    const decrypted = rsa.decrypt(
-      'FxGi+JNXalIIL3Y+poyP4F3j9Mp4yR75Rbe7yx8yI3MNix95OI3LY6jBYpGD5nhXoaYKgX2NrmZcaAeNg7uzIH3m95ULMrboa0Br3IPmEw2aMwW8uxDEL/I4x7Uvlux1QCHnv3rnYNX/Hyipg3DMeKKppmcAYZ1zpfatH6qXMD0vGttpX1KksUe/3TN/oz8swPecAePFg6I/MPcndCxIeVfTXLqUCpQbxvmN7GYQpWbxXGB7S6rQpxNkZLcssH6XHwM/6LRQ3laQ+U+o3kL/bCUUrSB27B6yAB65I0SsLyhFY+bxDjugxOND0MPaVxVpa7MM5lileUL8uqG5U58sBg==',
+    const decrypted = x509.decrypt(
+      'leFEibNhepKTLi2Er/BtavLejoKJ895LnkNgLEcolG4FOak7n/dKa1cYAZNrHqA/gu/Sd2HBdRirNI2OyJ766Lm5I5iiMQzLGobFI4+jyeLGDCjo2RjySLFBVjPKKbjo3RxcxpS6C/V3qvet3Px2VwdzCEfB3Ffpimsk6RblaZgLPl6YzRQsV1qkYtxxdsk3mdlR3eyXxSjfSUlx1bSZvv/BD2sCJtq+SiHOP9QfvQ8iIG5IbZtNdT95oaQ92bpGxuWA76DYqbP4C0s/Iv4w/GvV0mcgxcK1ePuY3wzCeHy6a80l36OaQGXf6xEJffvQ/QRz7BaEG2V0Fz/Ezx8L9g==',
     );
     expect(decrypted).to.equal(data[0]);
   });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   it.skip('decrypt() from Python encrypted', function () {
-    const decrypted = rsa.decrypt('');
+    const decrypted = x509.decrypt('');
     expect(decrypted).to.equal(data[0]);
   });
 });

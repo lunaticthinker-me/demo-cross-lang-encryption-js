@@ -81,6 +81,27 @@ Run unit tests using `npm run test`.
 
 Please run `npm start`
 
+Demo output:
+
+```
+AES Encrypted Values:
+CFB 128 => ZyoBm4ao9tEBGwAhexUdPy8sAZvFunBsTQt+gtuT4eQ=
+CFB 192 => E7lPkQDTeUgdt/NDWizvm0u64pLW5+ukBajd/JY/jDk=
+CFB 256 => ZMC+S5VhqVzqYbByTP+RN5cqOshkph7brZ0nMAL6LMY=
+CFB8 128 => Z05uRCfXLODT3HRl8tfvUzix/bwI9fmeCiPtxeYNnvo=
+CFB8 192 => WLPKdES1Cq35UBR/odXSUQ5kS6kW74BWmcIDXQq3XPA=
+CFB8 256 => /KhJeIhJ0C4Iqw6jzwHPvSRxL5vlfD5eofeQtmNita0=
+CBC 128 => dm+tS8jvdLhqPV7bC0gMv31LC+g0eriYmzz1WKpc+L7IYf/PE9l6D/zaiBcwfLSn
+CBC 192 => etjG/pjgmZijG5fKgb5Pf0iTDEEcK6ynQa8qxfUh19qADV821uK0yJhLNN+ut2Le
+CBC 256 => E3zbm3b2U3ey5DAqBPLAILFAfoEFb+vKXRewvo0Bmbxlcf3qQWvAnuTe1PNTaNoA
+
+RSA Encrypted Values:
+ejxZ8nhP78EcPV9htkveKjSYpML6WYfwCo+GXQEzeXnvNSEYDY78nr3qZ5lTqNrMMUlcdNIVOygFzRHMERs/UloZdnN/9ZviS40tEaLzZArsbEU9CE1avtAbAs2Fm1uQSbgX0tyHbhF/1nwOPc5VOlpeiGv/44T1yuKuK7H4C8/RhpLDFjs3BhQIML7D/xIxyDW0AQCuktCDX91R6UPSbhW2IFDnEZRWnxRkjhXo/RG2md40iIIaS7CYio1/6wYkuLoU1fHY3ZObjX4CPOINra38kYueX9KDg+dBOIJPeqAJwEdcrRFWOgo4Zk40gufXYWLPHXgeMVvGGBdAYfhCtQ==
+
+X509 Encrypted Values:
+hZwqcWtyUqud8icPjRPtq3SzjYUnY9Tyfqq5yCQtYDet5jlb6fBohS/HCrqa0CInk+n2fKyoIwnWXxPXUrokoV85/G1L0IkC5TpSZgD1XnEOsPatR9goIbtRt2kn4JGPo1pQ833xhCdu1eW5wV+jfIzlCyk3XKv0FdF6ccHZoGPU7UkQJaxSBuwZVMxFpqbL0PpDyurJ0nrXi4Fuuq70t3Amo60zn2BR/YlYD1oZ6hkwQ2382hJ12IGKQZXG+alg4WCp5oDkktrMRHflViZ3ce1laQ5kL7f/se4ZXEJ0P8yF5LbmkysxT9RCCbQuZEaqUxrYes+IFeOAWnrhYR5NbQ==
+```
+
 ## Authors
 
 - [Dragos Cirjan](mailto:dragos.cirjan@gmail.com) - Initial work

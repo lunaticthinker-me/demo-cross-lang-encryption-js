@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 
-type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'OFB' | 'CTR' | 'GCM'
+type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
@@ -22,16 +22,16 @@ export class AesCrypt /*implements Crypt*/ {
         throw new Error('invalid hash length. must be 16, 24 or 32');
     }
   }
-  
+
   protected base64Length(password: string): number {
     return Math.floor((3 * password.length) / 4) - password.replace(/[^=]/gi, '').length;
   }
 
-  async decrypt(password: string): Promise<string> {
+  async decrypt(data: string): Promise<string> {
     return new Promise((resolve) => {
       const key = this.hash;
 
-      const buffer = Buffer.alloc(this.base64Length(password), password, 'base64');
+      const buffer = Buffer.alloc(this.base64Length(data), data, 'base64');
       const iv = Buffer.alloc(16, 0);
       buffer.copy(iv, 0, 0, 16);
 
@@ -54,7 +54,7 @@ export class AesCrypt /*implements Crypt*/ {
     });
   }
 
-  async encrypt(password: string): Promise<string> {
+  async encrypt(plaintext: string): Promise<string> {
     return new Promise((resolve) => {
       let encrypted: Buffer;
 
@@ -72,7 +72,7 @@ export class AesCrypt /*implements Crypt*/ {
         const buffer = Buffer.concat([iv, encrypted]);
         resolve(buffer.toString('base64'));
       });
-      cipher.write(password);
+      cipher.write(plaintext);
       cipher.end();
     });
   }
