@@ -18,7 +18,7 @@ export class RsaCrypt implements Crypt {
     this.options = {
       ...this.options,
       ...options,
-    }
+    };
     this.prvKey = fs.readFileSync(prvPath).toString('utf-8');
     this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
   }

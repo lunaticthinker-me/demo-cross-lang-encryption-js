@@ -6,7 +6,15 @@ import * as path from 'path';
 import {it, describe} from 'mocha';
 
 import {RsaCrypt} from './../src/democrypt';
-import {data, CS_RSA_PKCS1V1_5, CS_RSA_OAEP, GO_RSA_OAEP, GO_RSA_PKCS1V1_5, PY_RSA_PKCS1V1_5, PY_RSA_OAEP} from '../src/democrypt/utils';
+import {
+  data,
+  CS_RSA_PKCS1V1_5,
+  CS_RSA_OAEP,
+  GO_RSA_OAEP,
+  GO_RSA_PKCS1V1_5,
+  PY_RSA_PKCS1V1_5,
+  PY_RSA_OAEP,
+} from '../src/democrypt/utils';
 
 describe('RsaCrypt', function () {
   let rsaOaep: RsaCrypt;
@@ -18,8 +26,8 @@ describe('RsaCrypt', function () {
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
       {
-        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
-      }
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+      },
     );
     rsaPkcs1v15 = new RsaCrypt(
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),

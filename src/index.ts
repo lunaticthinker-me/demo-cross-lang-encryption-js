@@ -40,16 +40,26 @@ const main = async (): Promise<void> => {
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
       {
-        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
-      }
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+      },
     ).encrypt(data[0])}'`,
   );
 
   console.log('// X509 Encrypted Values:');
   console.log(
-    `JS_X509 = '${new X509Crypt(
+    `JS_X509_OAEP = '${new X509Crypt(
       path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
+    ).encrypt(data[0])}'`,
+  );
+  console.log(
+    `JS_X509_PKCS1V1_5 = '${new X509Crypt(
+      path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
+      path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
+      {
+        oaepHash: 'sha512',
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+      },
     ).encrypt(data[0])}'`,
   );
 };

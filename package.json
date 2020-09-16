@@ -71,5 +71,8 @@
   },
   "gitHooks": {
     "pre-commit": "npm run git-hook:pre-commit && git add ."
+  },
+  "dependencies": {
+    "node-forge": "^0.10.0"
   }
 }
