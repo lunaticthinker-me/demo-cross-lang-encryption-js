@@ -124,33 +124,33 @@ describe('AesCrypt', () => {
     });
   }
 
-  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  describe('decrypt() on C# encrypted', () => {
-    it('aes-128-cfb8', async () => {
-      const decrypted = await aes128Cfb8.decrypt(CS_AES_CFB8_128);
-      expect(decrypted).to.equal(data[0]);
-    });
-    it('aes-192-cfb8', async () => {
-      const decrypted = await aes192Cfb8.decrypt(CS_AES_CFB8_192);
-      expect(decrypted).to.equal(data[0]);
-    });
-    it('aes-256-cfb8', async () => {
-      const decrypted = await aes256Cfb8.decrypt(CS_AES_CFB8_256);
-      expect(decrypted).to.equal(data[0]);
-    });
-    it('aes-128-cbc', async () => {
-      const decrypted = await aes128Cbc.decrypt(CS_AES_CBC_128);
-      expect(decrypted).to.equal(data[0]);
-    });
-    it('aes-192-cbc', async () => {
-      const decrypted = await aes192Cbc.decrypt(CS_AES_CBC_192);
-      expect(decrypted).to.equal(data[0]);
-    });
-    it('aes-256-cbc', async () => {
-      const decrypted = await aes256Cbc.decrypt(CS_AES_CBC_256);
-      expect(decrypted).to.equal(data[0]);
-    });
-  });
+  // //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  // describe('decrypt() on C# encrypted', () => {
+  //   it('aes-128-cfb8', async () => {
+  //     const decrypted = await aes128Cfb8.decrypt(CS_AES_CFB8_128);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  //   it('aes-192-cfb8', async () => {
+  //     const decrypted = await aes192Cfb8.decrypt(CS_AES_CFB8_192);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  //   it('aes-256-cfb8', async () => {
+  //     const decrypted = await aes256Cfb8.decrypt(CS_AES_CFB8_256);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  //   it('aes-128-cbc', async () => {
+  //     const decrypted = await aes128Cbc.decrypt(CS_AES_CBC_128);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  //   it('aes-192-cbc', async () => {
+  //     const decrypted = await aes192Cbc.decrypt(CS_AES_CBC_192);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  //   it('aes-256-cbc', async () => {
+  //     const decrypted = await aes256Cbc.decrypt(CS_AES_CBC_256);
+  //     expect(decrypted).to.equal(data[0]);
+  //   });
+  // });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   describe('decrypt() on Go encrypted', () => {
