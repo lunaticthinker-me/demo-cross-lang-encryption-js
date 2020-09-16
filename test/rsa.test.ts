@@ -50,17 +50,17 @@ describe('RsaCrypt', function () {
     });
   }
 
-  // //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  // it('decrypt(PKCS1V15) from C# encrypted', function () {
-  //   const decrypted = rsaPkcs1v15.decrypt(CS_RSA_PKCS1V1_5);
-  //   expect(decrypted).to.equal(data[0]);
-  // });
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it('decrypt(PKCS1V15) from C# encrypted', function () {
+    const decrypted = rsaPkcs1v15.decrypt(CS_RSA_PKCS1V1_5);
+    expect(decrypted).to.equal(data[0]);
+  });
 
-  // //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  // it('decrypt(OAEP) from C# encrypted', function () {
-  //   const decrypted = rsaOaep.decrypt(CS_RSA_OAEP);
-  //   expect(decrypted).to.equal(data[0]);
-  // });
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it('decrypt(OAEP) from C# encrypted', function () {
+    const decrypted = rsaOaep.decrypt(CS_RSA_OAEP);
+    expect(decrypted).to.equal(data[0]);
+  });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   it('decrypt(PKCS1V15) from Go encrypted', function () {

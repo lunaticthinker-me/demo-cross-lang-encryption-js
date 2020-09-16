@@ -60,17 +60,17 @@ describe('X509Crypt', function () {
     });
   }
 
-  // //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  // it('decrypt(PKCS1V15) from C# encrypted', function () {
-  //   const decrypted = x509Pkcs1v15.decrypt(CS_X509_PKCS1V1_5);
-  //   expect(decrypted).to.equal(data[0]);
-  // });
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it('decrypt(PKCS1V15) from C# encrypted', function () {
+    const decrypted = x509Pkcs1v15.decrypt(CS_X509_PKCS1V1_5);
+    expect(decrypted).to.equal(data[0]);
+  });
 
-  // //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
-  // it.skip('decrypt(OAEP) from C# encrypted', function () {
-  //   const decrypted = x509Oaep.decrypt(CS_X509_OAEP);
-  //   expect(decrypted).to.equal(data[0]);
-  // });
+  //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
+  it.skip('decrypt(OAEP) from C# encrypted', function () {
+    const decrypted = x509Oaep.decrypt(CS_X509_OAEP);
+    expect(decrypted).to.equal(data[0]);
+  });
 
   //eslint-disable-next-line mocha/no-skipped-tests, mocha/no-setup-in-describe
   it('decrypt(PKCS1V15) from Go encrypted', function () {
