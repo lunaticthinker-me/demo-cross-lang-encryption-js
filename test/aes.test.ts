@@ -9,13 +9,13 @@ import crs from 'crypto-random-string';
 describe('AesCrypt', () => {
   for (const algo of [
     // 'ECB',
-    // 'CBC',
+    'CBC',
     // 'PCBC',
     'CFB',
-    // 'CFB8',
-    // 'OFB',
-    // 'CTR',
-    // 'GCM'
+    'CFB8',
+    'OFB',
+    'CTR',
+    // 'GCM',
   ]) {
     for (const hash of [crs({length: 16}), crs({length: 24}), crs({length: 32})]) {
       for (const item of data) {

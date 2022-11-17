@@ -3,6 +3,8 @@ import * as semver from 'semver';
 
 export type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 
+// TODO: must add CCM and GCM https://nodejs.org/docs/latest-v15.x/api/crypto.html#crypto_ccm_mode
+
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
 
