@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
+import * as semver from 'semver';
 
-type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
+export type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
 
 export class AesCrypt /*implements Crypt*/ {
   protected algorithm: string;
@@ -74,20 +75,28 @@ export class AesCrypt /*implements Crypt*/ {
 
   async encryptBytes(plaintext: Buffer): Promise<Buffer> {
     return new Promise((resolve) => {
-      let encrypted: Buffer;
+      let encrypted: Buffer | string;
 
       const key = this.hash;
       const iv = crypto.randomBytes(16);
 
       const cipher = crypto.createCipheriv(this.algorithm, key, iv);
-      cipher.on('readable', () => {
-        let chunk;
-        while (null !== (chunk = cipher.read())) {
-          encrypted = encrypted ? Buffer.concat([encrypted, chunk]) : chunk;
-        }
-      });
+      if (semver.gte(process.version, '15.0.0')) {
+        cipher.on('data', (chunk) => (encrypted += chunk));
+      } else {
+        cipher.on('readable', () => {
+          let chunk;
+          while (null !== (chunk = cipher.read())) {
+            encrypted = encrypted ? Buffer.concat([encrypted, chunk]) : chunk;
+          }
+        });
+      }
+
       cipher.on('end', () => {
-        const buffer = Buffer.concat([iv, encrypted]);
+        const buffer = Buffer.concat([
+          iv,
+          typeof encrypted === 'string' ? Buffer.alloc(encrypted.length, encrypted) : encrypted,
+        ]);
         resolve(buffer);
       });
       cipher.write(plaintext);
