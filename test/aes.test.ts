@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {it, describe} from 'mocha';
 
 import {AesCrypt, AesMode} from './../src/democrypt/aes';
-import {data} from '../src/democrypt/utils';
+import {data} from './utils';
 import crs from 'crypto-random-string';
 
 describe('AesCrypt', () => {
@@ -23,7 +23,7 @@ describe('AesCrypt', () => {
           it(`aes encrypt/decrypt ${algo} ${hash}`, async () => {
             const aes = new AesCrypt(hash, algo as AesMode);
             const encrypted = await aes.encrypt(item);
-            const decrypted = await aes.decrypt(item);
+            const decrypted = await aes.decrypt(encrypted);
 
             expect(decrypted).to.equal(item);
           });

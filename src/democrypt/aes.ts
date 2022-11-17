@@ -81,8 +81,13 @@ export class AesCrypt /*implements Crypt*/ {
       const iv = crypto.randomBytes(16);
 
       const cipher = crypto.createCipheriv(this.algorithm, key, iv);
+      cipher.setEncoding('hex');
+
       if (semver.gte(process.version, '15.0.0')) {
-        cipher.on('data', (chunk) => (encrypted += chunk));
+        encrypted = '';
+        cipher.on('data', (chunk) => {
+          encrypted += chunk;
+        });
       } else {
         cipher.on('readable', () => {
           let chunk;
@@ -95,10 +100,13 @@ export class AesCrypt /*implements Crypt*/ {
       cipher.on('end', () => {
         const buffer = Buffer.concat([
           iv,
-          typeof encrypted === 'string' ? Buffer.alloc(encrypted.length, encrypted) : encrypted,
+          typeof encrypted === 'string'
+            ? Buffer.from(encrypted, 'hex')
+            : Buffer.alloc(encrypted.length, encrypted, 'hex'),
         ]);
         resolve(buffer);
       });
+
       cipher.write(plaintext);
       cipher.end();
     });
