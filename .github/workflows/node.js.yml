@@ -37,12 +37,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Init
         run: npm i
-      - name: Code Analysis
-        run: npm run ca
       - name: Code UnitTests
         run: npm run test:single ./test/aes.test.ts
-      # - name: Code Build
-      #   run: npm run build
-      - name: Code Docs
-        if: ${{ matrix.node-version == '14.x' }}
-        run: npm run docs
+      - name: Code Build
+        run: npm run build
