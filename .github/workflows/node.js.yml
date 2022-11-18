@@ -41,3 +41,5 @@ jobs:
         run: npm run test:single ./test/aes.test.ts
       - name: Code Build
         run: npm run build
+      - name: Code Build
+        run: node bin/generate.js && cat data.csv

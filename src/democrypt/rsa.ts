@@ -6,6 +6,13 @@ import * as util from 'util';
 
 import {Crypt} from './generic';
 
+export const RsaCryptPaddings: Record<string, number> = {
+  //'none': crypto.constants.RSA_NO_PADDING,
+  pkcs1: crypto.constants.RSA_PKCS1_PADDING,
+  oaep: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+  //'pss': crypto.constants.RSA_PKCS1_PSS_PADDING,
+};
+
 export class RsaCrypt implements Crypt {
   protected prvKey: string;
   protected pubKey: string;
@@ -18,7 +25,7 @@ export class RsaCrypt implements Crypt {
     this.options = {
       ...this.options,
       ...options,
-    }
+    };
     this.prvKey = fs.readFileSync(prvPath).toString('utf-8');
     this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
   }

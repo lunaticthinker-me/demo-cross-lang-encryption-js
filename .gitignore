@@ -73,3 +73,6 @@ typings/
 
 # mocha
 .junit.xml
+
+
+data.csv

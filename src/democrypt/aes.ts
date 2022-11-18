@@ -1,11 +1,26 @@
 import * as crypto from 'crypto';
 import * as semver from 'semver';
 
-export type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM';
+import {Crypt} from './generic';
 
-// TODO: must add CCM and GCM https://nodejs.org/docs/latest-v15.x/api/crypto.html#crypto_ccm_mode
+export type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM' | 'CCM';
 
-export class AesCrypt /*implements Crypt*/ {
+// TODO: must add CCM and GCM https://nodejs.org/docs/latest-v15.x/api/crypto.html#crypto_ccm_mode; ECB may be in the same place
+// TODO: PCBC is not recognised
+
+export const AesCryptModes: Record<AesMode, AesMode> = {
+  CBC: 'CBC',
+  CCM: 'CCM',
+  CFB: 'CFB',
+  CFB8: 'CFB8',
+  CTR: 'CTR',
+  ECB: 'ECB',
+  GCM: 'GCM',
+  OFB: 'OFB',
+  PCBC: 'PCBC',
+};
+
+export class AesCrypt implements Crypt {
   protected algorithm: string;
 
   constructor(private hash: string, protected mode: AesMode = 'CFB') {
