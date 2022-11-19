@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+
 import * as crypto from 'crypto';
 
 import * as path from 'path';
@@ -6,6 +7,7 @@ import * as path from 'path';
 import {it, describe} from 'mocha';
 
 import {X509Crypt, RsaCryptPaddings} from './../src/democrypt';
+
 import {data} from './utils';
 
 describe('X509Crypt', function () {
@@ -13,6 +15,9 @@ describe('X509Crypt', function () {
 
   beforeEach(function () {
     for (const pad in RsaCryptPaddings) {
+      if (pad === 'pkcs1') {
+        continue;
+      }
       rsa[pad] = new X509Crypt(
         path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
         path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
