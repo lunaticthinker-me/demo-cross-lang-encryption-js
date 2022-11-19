@@ -14,7 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Do nothing
-      run: |
-        cat <<<EOF
-        ${{ inputs.data_csv }}
-        EOF
+      run: echo "${{ inputs.data_csv }}"
