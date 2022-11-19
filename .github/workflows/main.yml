@@ -65,7 +65,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository_owner }}/demo-cross-lang-encryption-${{ matrix.lang }}/actions/workflows/decrypt.yml/dispatches \
-          -d '{"ref":"${{ github.event.repository.default_branch || 'master' }}","inputs":{"data_csv":"$(cat ./data.csv)","lang":"${{ matrix.lang }}"}}'
+          -d "{\"ref\":\"${{ github.event.repository.default_branch || 'master' }}\",\"inputs\":{\"data_csv\":\"$(cat ./data.csv)\",\"lang\":\"${{ matrix.lang }}\"}}"
       # - uses: ./
       #   with:
       #     owner: ${{ github.repository_owner }}
