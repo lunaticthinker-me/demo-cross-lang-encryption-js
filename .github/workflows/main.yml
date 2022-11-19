@@ -68,7 +68,7 @@ jobs:
           ref: ${{ github.event.repository.default_branch || 'master' }}
           github_token: ${{ secrets.SECRET_PERSONAL_TOKEN }}
           workflow_file_name: decrypt.yaml
-          client_payload: '{"data_csv": "${{DATA_CSV}}"}'
+          client_payload: '{"data_csv": "${{env.DATA_CSV}}"}'
           # wait_interval: 11
           # trigger_workflow: true
           # wait_workflow: true
