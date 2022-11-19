@@ -60,7 +60,7 @@ jobs:
       - name: Code Build
         run: npm i && npm run build
       - name: Run Generate
-        run: node bin/generate.js && cat data.csv && DATA_CSV=$(cat data.csv)
+        run: node bin/generate.js && cat data.csv && export DATA_CSV=$(cat data.csv)
       - name: Trigger ${{ matrix.lang }} decryption
         run: |
           echo $DATA_CSV && \
