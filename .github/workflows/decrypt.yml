@@ -1,0 +1,17 @@
+name: Decrypt CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      data_csv:
+        type: string
+        default: ''
+        description: CSV Data for Decryption
+
+jobs:
+  wait:
+    name: Wait
+    runs-on: ubuntu-latest
+    steps:
+    - name: Do nothing
+      run: echo ${data_csv}
