@@ -48,7 +48,7 @@ jobs:
 
     strategy:
       matrix:
-        language:
+        lang:
           # -cs
           # - go
           - js
@@ -64,7 +64,7 @@ jobs:
       - uses: ./
         with:
           owner: ${{ github.repository_owner }}
-          repo: demo-cross-lang-encryption-${{ language }}
+          repo: demo-cross-lang-encryption-${{ lang }}
           ref: ${{ github.event.repository.default_branch || 'master' }}
           github_token: ${{ secrets.SECRET_PERSONAL_TOKEN }}
           workflow_file_name: decrypt.yaml
