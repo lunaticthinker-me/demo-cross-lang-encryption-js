@@ -59,11 +59,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Code Build
         run: npm i && npm run build
-      - name: Run Generate
-        run: node bin/generate.js && cat data.csv
-      - name: Trigger ${{ matrix.lang }} decryption
+      - name: Run Generate & Trigger ${{ matrix.lang }} decryption
         run: |
-          echo $DATA_CSV && \
+          node bin/generate.js \
+          && cat data.csv \
           curl \
           -X POST \
           -H "Accept: application/vnd.github+json" \
