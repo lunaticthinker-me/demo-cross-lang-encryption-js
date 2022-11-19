@@ -57,20 +57,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: ${{ github.repository_owner }}/demo-cross-lang-encryption-${{ matrix.lang }}/.github/workflows/decrypt.yml@${{ github.event.repository.default_branch || 'master' }}
       # - name: Code Build
       #   run: npm run build
       # - name: Run Generate
       #   run: node bin/generate.js && cat data.csv && DATA_CSV=$(cat data.csv)
-      - uses: ./
-        with:
-          owner: ${{ github.repository_owner }}
-          repo: demo-cross-lang-encryption-${{ matrix.lang }}
-          ref: ${{ github.event.repository.default_branch || 'master' }}
-          github_token: ${{ secrets.SECRET_PERSONAL_TOKEN }}
-          workflow_file_name: decrypt.yaml
-          client_payload: '{"data_csv": "${{env.DATA_CSV}}"}'
-          # wait_interval: 11
-          # trigger_workflow: true
-          # wait_workflow: true
-          # propagate_failure: true
+      # - uses: ./
+      #   with:
+      #     owner: ${{ github.repository_owner }}
+      #     repo: demo-cross-lang-encryption-${{ matrix.lang }}
+      #     ref: ${{ github.event.repository.default_branch || 'master' }}
+      #     github_token: ${{ secrets.SECRET_PERSONAL_TOKEN }}
+      #     workflow_file_name: decrypt.yaml
+      #     client_payload: '{"data_csv": "${{env.DATA_CSV}}"}'
+      #     # wait_interval: 11
+      #     # trigger_workflow: true
+      #     # wait_workflow: true
+      #     # propagate_failure: true
 
