@@ -88,7 +88,6 @@ const main = async () => {
 
   const csv = results.map((r) => r.join(',')).join('\n');
 
-  console.log(path.join(process.cwd(), 'data.csv'))
   fs.writeFileSync(path.join(process.cwd(), 'data.csv'), csv);
 };
 
