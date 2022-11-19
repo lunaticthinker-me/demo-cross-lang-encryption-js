@@ -7,11 +7,15 @@ on:
         type: string
         default: 'Algo,Key,Decrypted,Encrypted,EncryptionError'
         description: CSV Data for Decryption
+      lang:
+        type: string
+        default: 'JavaScript'
+        description: CSV Data for Decryption
 
 jobs:
   wait:
     name: Wait
     runs-on: ubuntu-latest
     steps:
-    - name: Do nothing
+    - name: Decrypt values from ${{ inputs.lang }} encryption
       run: echo "${{ inputs.data_csv }}"
