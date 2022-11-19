@@ -15,9 +15,6 @@ describe('X509Crypt', function () {
 
   beforeEach(function () {
     for (const pad in RsaCryptPaddings) {
-      if (pad === 'pkcs1') {
-        continue;
-      }
       rsa[pad] = new X509Crypt(
         path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
         path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
@@ -38,6 +35,9 @@ describe('X509Crypt', function () {
 
   // eslint-disable-next-line mocha/no-setup-in-describe
   for (const padding in RsaCryptPaddings) {
+    if (padding === 'pkcs1') {
+      continue;
+    }
     describe(`encrypt/decrypt rsa(${padding})`, () => {
       for (const item of data) {
         it(`encrypt/decrypt => '${item}'`, function () {
