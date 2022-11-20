@@ -63,7 +63,7 @@ jobs:
           node bin/generate.js \
           && DATA_CSV=$(cat ./data.csv | jq -sR .) \
           && JSON_DATA='{"ref":"${{ github.event.repository.default_branch || 'master' }}","inputs":{"data_csv":"__DATA_CSV__","lang":"${{ matrix.lang }}"}}' \
-          && JSON_DATA=${JSON_DATA/__DATA_CSV__/$DATA_CSV} \
+          && JSON_DATA=${JSON_DATA/"__DATA_CSV__"/$DATA_CSV} \
           && echo $JSON_DATA \
           && curl \
           -X POST \
