@@ -35,6 +35,13 @@ const runDecrypt = async (data) => {
   for (const line of lines) {
     const encTool = getEncTool(line);
     const [algo,, text, encrypted, encryptionError] = line;
+    console.log({
+      algo,
+      text,
+      encrypted,
+      encryptionError,
+      encTool,
+    })
     if (encrypted.length > 0) {
       try {
         const decrypted = await encTool.decrypt(line[3]);
