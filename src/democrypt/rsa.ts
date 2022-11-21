@@ -18,7 +18,7 @@ export class RsaCrypt implements Crypt {
   protected pubKey: string;
 
   protected options: Partial<crypto.RsaPrivateKey> = {
-    padding: crypto.constants.RSA_PKCS1_PADDING,
+    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
   };
 
   constructor(prvPath: string, pubPath: string, options?: Partial<crypto.RsaPrivateKey>) {

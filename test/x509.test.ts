@@ -11,11 +11,11 @@ import {X509Crypt, RsaCryptPaddings} from './../src/democrypt';
 import {data} from './utils';
 
 describe('X509Crypt', function () {
-  let rsa: Record<string, X509Crypt> = {};
+  let x509: Record<string, X509Crypt> = {};
 
   beforeEach(function () {
     for (const pad in RsaCryptPaddings) {
-      rsa[pad] = new X509Crypt(
+      x509[pad] = new X509Crypt(
         path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
         path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
         {
@@ -26,25 +26,25 @@ describe('X509Crypt', function () {
   });
 
   afterEach(function () {
-    rsa = {};
+    x509 = {};
   });
 
   it('new X509Crypt()', function () {
-    expect(rsa.pkcs1 instanceof X509Crypt).to.be.true;
+    expect(x509.pkcs1 instanceof X509Crypt).to.be.true;
   });
 
   // eslint-disable-next-line mocha/no-setup-in-describe
   for (const padding in RsaCryptPaddings) {
-    if (padding === 'pkcs1') {
-      continue;
-    }
-    describe(`encrypt/decrypt rsa(${padding})`, () => {
+    // if (padding === 'pkcs1') {
+    //   continue;
+    // }
+    describe(`encrypt/decrypt x509(${padding})`, () => {
       for (const item of data) {
         it(`encrypt/decrypt => '${item}'`, function () {
-          const encrypted = rsa[padding].encrypt(item);
+          const encrypted = x509[padding].encrypt(item);
           expect(encrypted).to.be.a('string');
 
-          const decrypted = rsa[padding].decrypt(encrypted);
+          const decrypted = x509[padding].decrypt(encrypted);
           expect(decrypted).to.equal(item);
         });
       }

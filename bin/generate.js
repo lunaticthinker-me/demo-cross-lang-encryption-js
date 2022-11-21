@@ -20,7 +20,7 @@ const run = async () => {
     // 'CCM',
   ];
 
-  const results = [['Algo', 'Key', 'Decrypted', 'Encrypted', 'EncryptionError']];
+  const results = [];
 
   for (const algo in AesCryptModes) {
     if (![AesCryptModes.CCM, AesCryptModes.ECB, AesCryptModes.GCM, AesCryptModes.PCBC].includes(algo)) {
@@ -34,8 +34,13 @@ const run = async () => {
         } catch (e) {
           encryptionError = e.message;
         }
-
-        results.push([`AES:${algo}`, key, decrypted, encrypted, encryptionError]);
+        results.push({
+          Algo: `AES:${algo}`,
+          Key: key,
+          Decrypted: decrypted,
+          Encryppted: encrypted,
+          EncryptionError: encryptionError
+        });
       }
     }
   }
@@ -56,7 +61,13 @@ const run = async () => {
     } catch (e) {
       encryptionError = e.message;
     }
-    results.push([`RSA:${padding}`, '', decrypted, encrypted, encryptionError]);
+    results.push({
+      Algo: `RSA:${padding}`,
+      Key: '',
+      Decrypted: decrypted,
+      Encryppted: encrypted,
+      EncryptionError: encryptionError,
+    });
   }
 
   for (const padding in RsaCryptPaddings) {
@@ -75,7 +86,13 @@ const run = async () => {
     } catch (e) {
       encryptionError = e.message;
     }
-    results.push([`X509:${padding}`, '', decrypted, encrypted, encryptionError]);
+    results.push({
+      Algo: `X509:${padding}`,
+      Key: '',
+      Decrypted: decrypted,
+      Encryppted: encrypted,
+      EncryptionError: encryptionError,
+    });
   }
 
   return results;
@@ -86,7 +103,7 @@ const main = async () => {
 
   console.table(results);
 
-  const csv = results.map((r) => r.join(',')).join('\n');
+  const csv = results.map((r) => Object.values(r).join(',')).join('\n');
 
   fs.writeFileSync(path.join(process.cwd(), 'data.csv'), csv);
 };
