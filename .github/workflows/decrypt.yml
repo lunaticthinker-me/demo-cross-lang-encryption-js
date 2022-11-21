@@ -18,4 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Decrypt values from ${{ inputs.lang }} encryption
-      run: echo "${{ inputs.data_csv }}"
+      run: |
+        npm run build \
+        && echo "${{ inputs.data_csv }}" | node bin/decrypt.js
