@@ -6,25 +6,30 @@ const {AesCrypt, RsaCrypt, RsaCryptPaddings, X509Crypt} = require('../dist/src')
 let data = '';
 
 const getEncTool = (line) => {
-  if (line[0].includes('RSA')) {
+  const [algo, key, text, encrypted, encryptionError] = line;
+  console.log({
+    algo,
+    key
+  });
+  if (algo.includes('RSA')) {
     return new RsaCrypt(
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'rsa', 'cert.pem'),
       {
-        padding: RsaCryptPaddings[line[0].split(':').pop()],
+        padding: RsaCryptPaddings[algo.split(':').pop()],
       },
     );
   }
-  if (line[0].includes('X509')) {
+  if (algo.includes('X509')) {
     return new X509Crypt(
       path.join(__dirname, '..', 'cert', 'x509', 'key.pem'),
       path.join(__dirname, '..', 'cert', 'x509', 'cert.pem'),
       {
-        padding: RsaCryptPaddings[line[0].split(':').pop()],
+        padding: RsaCryptPaddings[algo.split(':').pop()],
       },
     );
   }
-  return new AesCrypt(line[1], line[0].split(':').pop());
+  return new AesCrypt(key, algo.split(':').pop());
 };
 
 const runDecrypt = async (data) => {
@@ -35,14 +40,14 @@ const runDecrypt = async (data) => {
   for (const line of lines) {
     const encTool = getEncTool(line);
     const [algo, key, text, encrypted, encryptionError] = line;
-    console.log({
-      algo,
-      key,
-      text,
-      encrypted,
-      encryptionError,
-      encTool,
-    })
+    // console.log({
+    //   algo,
+    //   key,
+    //   text,
+    //   encrypted,
+    //   encryptionError,
+    //   encTool,
+    // })
     if (encrypted.length > 0) {
       try {
         const decrypted = await encTool.decrypt(line[3]);
