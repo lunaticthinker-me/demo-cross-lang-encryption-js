@@ -34,9 +34,10 @@ const runDecrypt = async (data) => {
     .map((line) => line.trim().split(','));
   for (const line of lines) {
     const encTool = getEncTool(line);
-    const [algo,, text, encrypted, encryptionError] = line;
+    const [algo, key, text, encrypted, encryptionError] = line;
     console.log({
       algo,
+      key,
       text,
       encrypted,
       encryptionError,
