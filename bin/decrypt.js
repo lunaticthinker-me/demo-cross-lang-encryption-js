@@ -9,7 +9,7 @@ const getEncTool = (line) => {
   const [algo, key, text, encrypted, encryptionError] = line;
   console.log({
     algo,
-    key
+    key,
   });
   if (algo.includes('RSA')) {
     return new RsaCrypt(
@@ -35,6 +35,7 @@ const getEncTool = (line) => {
 const runDecrypt = async (data) => {
   const result = [];
   const lines = data
+    .trim()
     .split('\n')
     .map((line) => line.trim().split(','));
   for (const line of lines) {
@@ -55,7 +56,7 @@ const runDecrypt = async (data) => {
           result.push({
             Algo: algo,
             Decrypted: 'yes',
-            DecryptionError: ''
+            DecryptionError: '',
           });
         } else {
           result.push({
@@ -65,11 +66,11 @@ const runDecrypt = async (data) => {
           });
         }
       } catch (e) {
-          result.push({
-            Algo: algo,
-            Decrypted: 'no',
-            DecryptionError: e.message,
-          });
+        result.push({
+          Algo: algo,
+          Decrypted: 'no',
+          DecryptionError: e.message,
+        });
       }
     } else {
       result.push({
@@ -94,6 +95,6 @@ if (process.stdin.isTTY) {
   });
   process.stdin.on('end', async function () {
     const result = await runDecrypt(data);
-    console.table(result)
+    console.table(result);
   });
 }
