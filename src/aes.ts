@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+
 import * as semver from 'semver';
 
 import {Crypt} from './generic';
@@ -21,7 +22,7 @@ export class AesCrypt implements Crypt {
   protected algorithm: string;
 
   constructor(private hash: string, protected mode: AesMode = 'CFB') {
-    if ([AesCryptModes.CCM, AesCryptModes.ECB, AesCryptModes.GCM, AesCryptModes.PCBC].includes(mode)) {
+    if ([/*AesCryptModes.CCM,*/ AesCryptModes.ECB, /*AesCryptModes.GCM,*/ AesCryptModes.PCBC].includes(mode)) {
       throw new Error(`Unsuported cypher: ${mode}`);
     }
     switch (hash.length) {
@@ -54,11 +55,35 @@ export class AesCrypt implements Crypt {
     return this.decryptBytes(cipherBuffer).then((cipher) => cipher.toString('utf-8'));
   }
 
+  async decryptBytesGcm(ciphertext: Buffer): Promise<Buffer> {
+    const key = this.hash;
+
+    // const nonce = Buffer.alloc(ciphertext[0], 0);
+    // ciphertext.copy(nonce, 0, 1, 1 + ciphertext[0]);
+
+    // let remainingCipherText = Buffer.alloc(ciphertext[1 + ciphertext[0]])
+    // const tag = Buffer.alloc(ciphertext[0], 0);
+
+    // const decipher = createDecipheriv('aes-192-ccm', key, nonce, {
+    //   authTagLength: 16
+    // });
+    // decipher.setAuthTag(tag);
+    // decipher.setAAD(aad, {
+    //   plaintextLength: ciphertext.length
+    // });
+    // const receivedPlaintext = decipher.update(ciphertext, null, 'utf8');
+
+    return Buffer.from(" ");
+  }
+
   /**
    * @param {Buffer} cipherText An AES encrypted buffer UTF8 encoded
    * @return {Buffer} An AES decrypted buffer UTF8 encoded
    */
   async decryptBytes(cipherText: Buffer): Promise<Buffer> {
+    if ([AesCryptModes.CCM, AesCryptModes.GCM].includes(this.mode)) {
+      return this.decryptBytesGcm(cipherText);
+    }
     return new Promise((resolve) => {
       const key = this.hash;
 
@@ -90,7 +115,50 @@ export class AesCrypt implements Crypt {
     );
   }
 
+  async encryptBytesGcm(plaintext: Buffer): Promise<Buffer> {
+    const nonce = crypto.randomBytes(12);
+    const key = this.hash;
+
+    const aad = Buffer.from('0123456789', 'hex');
+
+    const cipher = crypto.createCipheriv(this.algorithm, key, nonce, {
+      authTagLength: 16
+    } as crypto.CipherGCMOptions) as crypto.CipherGCM;
+
+    cipher.setAAD(aad, {
+      plaintextLength: plaintext.length
+    });
+
+    const ciphertext = cipher.update(plaintext.toString('utf8'), 'utf8');
+
+    cipher.final();
+
+    const tag = cipher.getAuthTag();
+
+    console.log(Buffer.from([nonce.length]),
+    nonce,
+    Buffer.from([tag.length]),
+    tag,
+    Buffer.from([aad.length]),
+    aad)
+
+    // return Buffer.concat([
+    //   Buffer.from([nonce.length]),
+    //   nonce,
+    //   Buffer.from([tag.length]),
+    //   tag,
+    //   Buffer.from([aad.length]),
+    //   aad,
+    //   ciphertext
+    // ]);
+
+    return Buffer.from(" ")
+  }
+
   async encryptBytes(plaintext: Buffer): Promise<Buffer> {
+    if ([AesCryptModes.CCM, AesCryptModes.GCM].includes(this.mode)) {
+      return this.encryptBytesGcm(plaintext);
+    }
     return new Promise((resolve) => {
       let encrypted: Buffer | string;
 

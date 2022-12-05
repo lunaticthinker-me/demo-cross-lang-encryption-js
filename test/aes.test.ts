@@ -2,15 +2,17 @@ import {expect} from 'chai';
 
 import {it, describe} from 'mocha';
 
-import {AesCrypt, AesMode, AesCryptModes} from './../src';
-import {data} from './utils';
 import crs from 'crypto-random-string';
+
+import {AesCrypt, AesMode, AesCryptModes} from './../src';
+
+import {data} from './utils';
 
 describe('AesCrypt', () => {
   for (const a in AesCryptModes) {
     const algo = a as AesMode;
     // eslint-disable-next-line mocha/no-setup-in-describe
-    if (![AesCryptModes.CCM, AesCryptModes.ECB, AesCryptModes.GCM, AesCryptModes.PCBC].includes(algo)) {
+    if (![/*AesCryptModes.CCM,*/ AesCryptModes.ECB, /*AesCryptModes.GCM,*/ AesCryptModes.PCBC].includes(algo)) {
       // eslint-disable-next-line mocha/no-setup-in-describe
       describe(`encrypt/decrypt aes(${AesCryptModes[algo]})`, () => {
         // eslint-disable-next-line mocha/no-setup-in-describe
