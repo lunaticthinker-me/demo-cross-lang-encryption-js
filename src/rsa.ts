@@ -26,6 +26,9 @@ export class RsaCrypt implements Crypt {
       ...this.options,
       ...options,
     };
+    if (this.options.padding === crypto.constants.RSA_PKCS1_OAEP_PADDING) {
+      this.options.oaepHash = 'sha256';
+    }
     this.prvKey = fs.readFileSync(prvPath).toString('utf-8');
     this.pubKey = fs.readFileSync(pubPath).toString('utf-8');
   }
