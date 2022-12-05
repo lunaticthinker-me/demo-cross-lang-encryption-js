@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import {it, describe} from 'mocha';
 
-import {RsaCrypt, RsaCryptPaddings} from './../src/democrypt';
+import {RsaCrypt, RsaCryptPaddings} from './../src';
 import {data} from './utils';
 
 describe('RsaCrypt', function () {

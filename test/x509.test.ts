@@ -6,7 +6,7 @@ import * as path from 'path';
 
 import {it, describe} from 'mocha';
 
-import {X509Crypt, RsaCryptPaddings} from './../src/democrypt';
+import {X509Crypt, RsaCryptPaddings} from './../src';
 
 import {data} from './utils';
 

@@ -5,29 +5,29 @@ import {Crypt} from './generic';
 
 export type AesMode = 'ECB' | 'CBC' | 'PCBC' | 'CFB' | 'CFB8' | 'OFB' | 'CTR' | 'GCM' | 'CCM';
 
-// TODO: must add CCM and GCM https://nodejs.org/docs/latest-v15.x/api/crypto.html#crypto_ccm_mode; ECB may be in the same place
-// TODO: PCBC is not recognised
-
 export const AesCryptModes: Record<AesMode, AesMode> = {
-  CBC: 'CBC',
-  CCM: 'CCM',
-  CFB: 'CFB',
-  CFB8: 'CFB8',
-  CTR: 'CTR',
-  ECB: 'ECB',
-  GCM: 'GCM',
-  OFB: 'OFB',
-  PCBC: 'PCBC',
+  CBC: 'CBC', // ✓
+  CCM: 'CCM', // TODO: https://nodejs.org/docs/latest-v15.x/api/crypto.html#crypto_ccm_mode
+  CFB: 'CFB',// ✓
+  CFB8: 'CFB8', // ✓
+  CTR: 'CTR', // ✓
+  ECB: 'ECB', // see CCM
+  GCM: 'GCM', // see GCM
+  OFB: 'OFB', // ✓
+  PCBC: 'PCBC', // unavailable
 };
 
 export class AesCrypt implements Crypt {
   protected algorithm: string;
 
   constructor(private hash: string, protected mode: AesMode = 'CFB') {
+    if ([AesCryptModes.CCM, AesCryptModes.ECB, AesCryptModes.GCM, AesCryptModes.PCBC].includes(mode)) {
+      throw new Error(`Unsuported cypher: ${mode}`);
+    }
     switch (hash.length) {
+      // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization
+      // 'aes-128-<abbr>'
       case 16:
-        // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#History_and_standardization
-        // 'aes-128-<abbr>'
         this.algorithm = `aes-128-${mode.toLowerCase()}`;
         break;
       case 24:

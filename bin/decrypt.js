@@ -7,10 +7,6 @@ let data = '';
 
 const getEncTool = (line) => {
   const [algo, key, text, encrypted, encryptionError] = line;
-  console.log({
-    algo,
-    key,
-  });
   if (algo.includes('RSA')) {
     return new RsaCrypt(
       path.join(__dirname, '..', 'cert', 'rsa', 'key.pem'),
@@ -39,44 +35,44 @@ const runDecrypt = async (data) => {
     .split('\n')
     .map((line) => line.trim().split(','));
   for (const line of lines) {
-    const encTool = getEncTool(line);
-    const [algo, key, text, encrypted, encryptionError] = line;
-    // console.log({
-    //   algo,
-    //   key,
-    //   text,
-    //   encrypted,
-    //   encryptionError,
-    //   encTool,
-    // })
-    if (encrypted.length > 0) {
-      try {
-        const decrypted = await encTool.decrypt(line[3]);
-        if (decrypted === text) {
-          result.push({
-            Algo: algo,
-            Decrypted: 'yes',
-            DecryptionError: '',
-          });
-        } else {
+    try {
+      const [algo, key, text, encrypted, encryptionError] = line;
+      if (!encryptionError) {
+        const encTool = getEncTool(line);
+        try {
+          const decrypted = await encTool.decrypt(line[3]);
+          if (decrypted === text) {
+            result.push({
+              Algo: algo,
+              Decrypted: 'yes',
+              DecryptionError: '',
+            });
+          } else {
+            result.push({
+              Algo: algo,
+              Decrypted: 'no',
+              DecryptionError: 'decryption failed',
+            });
+          }
+        } catch (e) {
           result.push({
             Algo: algo,
             Decrypted: 'no',
-            DecryptionError: 'decryption failed...???',
+            DecryptionError: e.message,
           });
         }
-      } catch (e) {
+      } else {
         result.push({
           Algo: algo,
           Decrypted: 'no',
-          DecryptionError: e.message,
+          DecryptionError: `source could not encrypt: ${encryptionError}`,
         });
       }
-    } else {
+    } catch (e) {
       result.push({
-        Algo: algo,
+        Algo: line[0],
         Decrypted: 'no',
-        DecryptionError: `Encryption Error: ${encryptionError}`,
+        DecryptionError: `${e.message}`,
       });
     }
   }

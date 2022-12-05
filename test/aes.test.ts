@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import {it, describe} from 'mocha';
 
-import {AesCrypt, AesMode, AesCryptModes} from './../src/democrypt/aes';
+import {AesCrypt, AesMode, AesCryptModes} from './../src';
 import {data} from './utils';
 import crs from 'crypto-random-string';
 

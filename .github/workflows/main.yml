@@ -10,7 +10,8 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  unittest:
+    name: Unit Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,12 +22,12 @@ jobs:
           - 12.x
           #  error @babel/eslint-parser@7.14.2: The engine "node" is incompatible with this module. Expected version "^10.13.0 || ^12.13.0 || >=14.0.0".
           # - 13.x
-          # - 14.x
-          # - 15.x
-          # - 16.x
-          # - 17.x
-          # - 18.x
-          # - 19.x
+          - 14.x
+          - 15.x
+          - 16.x
+          - 17.x
+          - 18.x
+          - 19.x
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -40,14 +41,15 @@ jobs:
       - name: Code UnitTests
         run: npm run test
 
-  decrypt:
+  encrypt:
+    name: Encrypt
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         lang:
           # -cs
-          # - go
+          - go
           - js
           # - lua # TODO: no implemented repo yet
           # - py
@@ -60,9 +62,9 @@ jobs:
       - name: Run Generate & Trigger ${{ matrix.lang }} decryption
         run: |
           set -ex; \
-          node bin/generate.js \
+          node bin/encrypt.js \
           && DATA_CSV=$(cat ./data.csv | jq -sR .) \
-          && JSON_DATA='{"ref":"${{ github.event.repository.default_branch || 'master' }}","inputs":{"data_csv":__DATA_CSV__,"lang":"${{ matrix.lang }}"}}' \
+          && JSON_DATA='{"ref":"${{ github.event.repository.default_branch || 'master' }}","inputs":{"data_csv":__DATA_CSV__,"lang":"js"}}' \
           && JSON_DATA=${JSON_DATA/__DATA_CSV__/$DATA_CSV} \
           && echo $JSON_DATA \
           && curl \

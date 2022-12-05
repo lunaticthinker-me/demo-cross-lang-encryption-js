@@ -23,25 +23,23 @@ const run = async () => {
   const results = [];
 
   for (const algo in AesCryptModes) {
-    if (![AesCryptModes.CCM, AesCryptModes.ECB, AesCryptModes.GCM, AesCryptModes.PCBC].includes(algo)) {
-      const keys = [crs({length: 16}), crs({length: 24}), crs({length: 32})];
-      for (const key of keys) {
-        const decrypted = crs({length: 16});
-        let encrypted = '';
-        let encryptionError = '';
-        try {
-          encrypted = await new AesCrypt(key, algo).encrypt(decrypted);
-        } catch (e) {
-          encryptionError = e.message;
-        }
-        results.push({
-          Algo: `AES:${algo}`,
-          Key: key,
-          Decrypted: decrypted,
-          Encryppted: encrypted,
-          EncryptionError: encryptionError
-        });
+    const keys = [crs({length: 16}), crs({length: 24}), crs({length: 32})];
+    for (const key of keys) {
+      const decrypted = crs({length: 16});
+      let encrypted = '';
+      let encryptionError = '';
+      try {
+        encrypted = await new AesCrypt(key, algo).encrypt(decrypted);
+      } catch (e) {
+        encryptionError = e.message;
       }
+      results.push({
+        Algo: `AES:${algo}`,
+        Key: key,
+        Decrypted: decrypted,
+        Encryppted: encrypted,
+        EncryptionError: encryptionError
+      });
     }
   }
 

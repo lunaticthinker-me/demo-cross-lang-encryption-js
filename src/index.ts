@@ -1,3 +1,3 @@
-export * from './democrypt/aes';
-export * from './democrypt/rsa';
-export * from './democrypt/x509';
+export * from './aes';
+export * from './rsa';
+export * from './x509';
